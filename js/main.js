@@ -13,6 +13,9 @@ const color = d3.scaleQuantize()
     "rgb(172,15,83)"]
   );
 
+let svg = d3.select("body").append("svg");
+let path = d3.geoPath().projection(projection);
+
 
 d3.csv("data/overall.csv").then(function(data) {
   let min = d3.min(data, function(d) { return d["2021"]; });
@@ -27,34 +30,42 @@ d3.csv("data/overall.csv").then(function(data) {
       let score = parseFloat(data[i]["2021"]);
       // console.log(`${dataCountry} ${score}`)
 
-      let found = false;
       for (let j = 0; j < geojson.features.length; j++) {
         if (dataCountry === geojson.features[j].properties.name) {
           geojson.features[j].properties["2021"] = score;
-          found = true;
           // console.log(`Matched ${dataCountry}`)
           break;
         }
       }
-
-      if (!found) {
-        console.log(`Did not match on ${dataCountry}`)
-      }
     }
 
+    svg.selectAll("path")
+      .data(geojson.features)
+      .enter()
+      .append("path")
+      .attr("d", path)
+      .style("fill", function(d) {
+        let score = d.properties["2021"];
+        if (score) {
+          return color(score);
+        } else {
+          //If value is undefined…
+          return "#ccc";
+        }
+      });
   });
 });
 
-let svg = d3.select("body").append("svg");
-let path = d3.geoPath().projection(projection);
-d3.json("data/world.geo.json").then(function(geojson) {
-  // svg.append("path").attr("d", path(geojson));
-  svg.selectAll("path")
-    .data(geojson.features)
-    .enter()
-    .append("path")
-    .attr("d", path)
-    .style("fill", "steelblue");
-})
+// let svg = d3.select("body").append("svg");
+// let path = d3.geoPath().projection(projection);
+// d3.json("data/world.geo.json").then(function(geojson) {
+//   // svg.append("path").attr("d", path(geojson));
+//   svg.selectAll("path")
+//     .data(geojson.features)
+//     .enter()
+//     .append("path")
+//     .attr("d", path)
+//     .style("fill", "steelblue");
+// })
 
 
