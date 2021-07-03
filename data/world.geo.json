@@ -18030,7 +18030,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "England"
+        "name": "United Kingdom"
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -38238,7 +38238,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "Republic of Serbia"
+        "name": "Serbia"
       },
       "geometry": {
         "type": "Polygon",
@@ -40734,7 +40734,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "United Republic of Tanzania"
+        "name": "Tanzania"
       },
       "geometry": {
         "type": "Polygon",
@@ -41570,7 +41570,7 @@
     {
       "type": "Feature",
       "properties": {
-        "name": "USA"
+        "name": "United States of America"
       },
       "geometry": {
         "type": "MultiPolygon",
