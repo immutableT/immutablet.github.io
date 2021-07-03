@@ -15,7 +15,8 @@ d3.json("data/world.geo.json").then(function(geojson) {
     .data(geojson.features)
     .enter()
     .append("path")
-    .attr("d", path);
+    .attr("d", path)
+    .style("fill", "steelblue");;
 })
 
 d3.csv("data/overall.csv").then(function(data) {
