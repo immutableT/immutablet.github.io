@@ -32,7 +32,7 @@ function drawGlobalPeaceIndexMap(year) {
 
         for (let j = 0; j < geojson.features.length; j++) {
           if (dataCountry === geojson.features[j].properties.name) {
-            geojson.features[j].properties[year] = score;
+            geojson.features[j].properties.value = score;
             // console.log(`Matched ${dataCountry}`)
             break;
           }
@@ -45,7 +45,7 @@ function drawGlobalPeaceIndexMap(year) {
         .append("path")
         .attr("d", path)
         .style("fill", function(d) {
-          let score = d.properties[year];
+          let score = d.properties.value;
           if (score) {
             return color(score);
           } else {
