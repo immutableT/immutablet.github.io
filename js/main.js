@@ -14,8 +14,12 @@ const color = d3.scaleQuantize()
   );
 
 let svg = d3.select("body").append("svg");
-let path = d3.geoPath().projection(projection);
+let tooltip = d3.select('body')
+  .append('div')
+  .attr('id', 'tooltip')
+  .attr("class", "tooltip");
 
+let path = d3.geoPath().projection(projection);
 
 function drawGlobalPeaceIndexMap(year) {
   d3.csv("data/overall.csv").then(function(data) {
@@ -52,7 +56,27 @@ function drawGlobalPeaceIndexMap(year) {
             //If value is undefined…
             return "#ccc";
           }
-        });
+        })
+        .on("mouseover", function(d) {
+          console.log(d)
+          let country = d3.select(this).data()[0].properties.name
+          let score = d3.select(this).data()[0].properties.value
+          if (!score) {
+            score = "data not available"
+          }
+
+          tooltip.transition()
+            .duration(200)
+            .style("opacity", .9);
+          tooltip.html(country + "<br/>" + score)
+            .style('left', d.clientX + 'px')
+            .style('top', d.clientY + 'px')
+        })
+        .on("mouseout", function() {
+          tooltip.transition()
+            .duration(200)
+            .style("opacity", 0);
+        })
     });
   });
 }
