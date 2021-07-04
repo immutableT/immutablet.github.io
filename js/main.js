@@ -13,7 +13,7 @@ const color = d3.scaleQuantize()
     "rgb(196,58,31)"]
   );
 
-let svg = d3.select("body").append("svg");
+let svg = d3.select("#map");
 let tooltip = d3.select('body')
   .append('div')
   .attr('id', 'tooltip')
@@ -81,7 +81,71 @@ function drawGlobalPeaceIndexMap(year) {
   });
 }
 
+function drawLegend() {
+  let svg = d3.select("#legend");
+  let x = 100;
+  let r = 6;
+
+  svg.append("circle")
+    .attr("cx", x)
+    .attr("cy",130)
+    .attr("r", r)
+    .style("fill", "#0E3F99FF")
+  svg.append("circle").
+    attr("cx", x)
+    .attr("cy",160)
+    .attr("r", r)
+    .style("fill", "#495D9AFF")
+  svg.append("circle")
+    .attr("cx", x)
+    .attr("cy",190)
+    .attr("r", r)
+    .style("fill", "#9BA3C1FF")
+  svg.append("circle")
+    .attr("cx", x)
+    .attr("cy",220)
+    .attr("r", r)
+    .style("fill", "#CE887DFF")
+  svg.append("circle")
+    .attr("cx", x)
+    .attr("cy",250)
+    .attr("r", r)
+    .style("fill", "#C43A1FFF")
+
+  svg.append("text")
+    .attr("x", x + 20)
+    .attr("y", 130)
+    .text("1.5")
+    .style("font-size", "15px")
+    .attr("alignment-baseline","middle")
+  svg.append("text")
+    .attr("x", x + 20)
+    .attr("y", 160)
+    .text("2.0")
+    .style("font-size", "15px")
+    .attr("alignment-baseline","middle")
+  svg.append("text")
+    .attr("x", x + 20)
+    .attr("y", 190)
+    .text("2.5")
+    .style("font-size", "15px")
+    .attr("alignment-baseline","middle")
+  svg.append("text")
+    .attr("x", x + 20)
+    .attr("y", 220)
+    .text("3.0")
+    .style("font-size", "15px")
+    .attr("alignment-baseline","middle")
+  svg.append("text")
+    .attr("x", x + 20)
+    .attr("y", 250)
+    .text("3.5")
+    .style("font-size", "15px")
+    .attr("alignment-baseline","middle")
+}
+
 drawGlobalPeaceIndexMap('2021');
+drawLegend();
 
 
 
