@@ -83,9 +83,15 @@ function drawGlobalPeaceIndexMap(year) {
 
 function drawLegend() {
   let svg = d3.select("#legend");
-  let x = 100;
+  let x = 50;
   let r = 6;
 
+
+  svg.append("circle")
+    .attr("cx", x)
+    .attr("cy",100)
+    .attr("r", r)
+    .style("fill", "#CCC")
   svg.append("circle")
     .attr("cx", x)
     .attr("cy",130)
@@ -112,35 +118,42 @@ function drawLegend() {
     .attr("r", r)
     .style("fill", "#C43A1FFF")
 
+  let fontSize = "17px"
+  svg.append("text")
+    .attr("x", x + 20)
+    .attr("y", 100)
+    .html("Data not available")
+    .style("font-size", fontSize)
+    .attr("alignment-baseline","middle")
   svg.append("text")
     .attr("x", x + 20)
     .attr("y", 130)
-    .text("1.5")
-    .style("font-size", "15px")
+    .html("1.5 More Peaceful")
+    .style("font-size", fontSize)
     .attr("alignment-baseline","middle")
   svg.append("text")
     .attr("x", x + 20)
     .attr("y", 160)
     .text("2.0")
-    .style("font-size", "15px")
+    .style("font-size", fontSize)
     .attr("alignment-baseline","middle")
   svg.append("text")
     .attr("x", x + 20)
     .attr("y", 190)
     .text("2.5")
-    .style("font-size", "15px")
+    .style("font-size", fontSize)
     .attr("alignment-baseline","middle")
   svg.append("text")
     .attr("x", x + 20)
     .attr("y", 220)
     .text("3.0")
-    .style("font-size", "15px")
+    .style("font-size", fontSize)
     .attr("alignment-baseline","middle")
   svg.append("text")
     .attr("x", x + 20)
     .attr("y", 250)
-    .text("3.5")
-    .style("font-size", "15px")
+    .text("3.5 Less Peaceful")
+    .style("font-size", fontSize)
     .attr("alignment-baseline","middle")
 }
 
