@@ -3,7 +3,9 @@
 let margin = {top: 0, right: 0, bottom: 0, left: 0};
 let width  = 960 - margin.left - margin.right;
 let height = 400 - margin.top - margin.bottom;
-let projection = d3.geoMercator().scale(130).translate( [width / 2, height / 1.5]);
+let projection = d3.geoMercator()
+  .scale(130)
+  .translate( [width / 2, height / 1.5]);
 const color = d3.scaleQuantize()
   .range([
     "rgb(14,63,153)",
@@ -155,6 +157,12 @@ function drawLegend() {
     .text("3.5 Less Peaceful")
     .style("font-size", fontSize)
     .attr("alignment-baseline","middle")
+  svg.append("text")
+    .attr("x", x)
+    .attr("y", 300)
+    .text("Source: Global Peace Index 2021")
+    .style("font-size", "20px")
+    .attr("alignment-baseline","Left")
 }
 
 drawGlobalPeaceIndexMap('2021');
