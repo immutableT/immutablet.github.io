@@ -185,6 +185,7 @@ d3.select("#year")
     console.log("Year selection changed", e);
     let year = eval(d3.select(this).property('value'));
     console.log("Year selection changed", year);
+    svg.selectAll("path").remove();
     drawGlobalPeaceIndexMap(year);
     // drawLegend();
 })
