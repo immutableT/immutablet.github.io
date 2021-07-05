@@ -22,6 +22,16 @@ let tooltip = d3.select('body')
   .attr("class", "tooltip");
 
 let path = d3.geoPath().projection(projection);
+let zooming = function (event, d) {
+  console.log(event.transform);
+  let offset = [event.transform.x, event.transform.y];
+  let newScale = event.transform.k * 2000;
+  //Update projection with new offset and scale
+  projection.translate(offset).scale(newScale);
+  //Update all paths and circles
+  svg.selectAll("path").attr("d", path);
+};
+svg.call(d3.zoom().on("zoom", zooming));
 
 function drawGlobalPeaceIndexMap(year) {
   d3.csv("data/overall.csv").then(function(data) {
@@ -60,7 +70,7 @@ function drawGlobalPeaceIndexMap(year) {
           }
         })
         .on("mouseover", function(d) {
-          console.log(d)
+          // console.log("mouseover event:", d);
           let country = d3.select(this).data()[0].properties.name
           let score = d3.select(this).data()[0].properties.value
           if (!score) {
@@ -130,7 +140,7 @@ function drawLegend() {
   svg.append("text")
     .attr("x", x + 20)
     .attr("y", 130)
-    .html("1.5 More Peaceful")
+    .html("1.5 " + "&#8593;" + "More Peaceful")
     .style("font-size", fontSize)
     .attr("alignment-baseline","middle")
   svg.append("text")
@@ -154,7 +164,7 @@ function drawLegend() {
   svg.append("text")
     .attr("x", x + 20)
     .attr("y", 250)
-    .text("3.5 Less Peaceful")
+    .html("3.5" + "&#8595" + "Less Peaceful")
     .style("font-size", fontSize)
     .attr("alignment-baseline","middle")
   svg.append("text")
