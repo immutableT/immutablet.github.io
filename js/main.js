@@ -1,7 +1,7 @@
 //import * as d3 from "./d3.min.js";
 
 let margin = {top: 0, right: 0, bottom: 0, left: 0};
-let width  = 960 - margin.left - margin.right;
+let width  = 860 - margin.left - margin.right;
 let height = 400 - margin.top - margin.bottom;
 let projection = d3.geoMercator()
   .scale(130)
@@ -35,6 +35,7 @@ let tooltip = d3.select('body')
 let path = d3.geoPath().projection(projection);
 
 function drawGlobalPeaceIndexMap(year) {
+  console.log(`Generating map for year ${year}`)
   d3.csv("data/overall.csv").then(function(data) {
     let min = d3.min(data, function(d) { return d[year]; });
     let max = d3.max(data, function(d) { return d[year]; });
@@ -64,6 +65,7 @@ function drawGlobalPeaceIndexMap(year) {
         .style("fill", function(d) {
           let score = d.properties.value;
           if (score) {
+            console.log(`Found score of ${score} for ${d.properties.name}`)
             return color(score);
           } else {
             //If value is undefined…
@@ -77,7 +79,6 @@ function drawGlobalPeaceIndexMap(year) {
           if (!score) {
             score = "data not available"
           }
-
           tooltip.transition()
             .duration(200)
             .style("opacity", .9);
@@ -178,6 +179,16 @@ function drawLegend() {
 
 drawGlobalPeaceIndexMap('2021');
 drawLegend();
+
+d3.select("#year")
+  .on("change", function(e) {
+    console.log("Year selection changed", e);
+    let year = eval(d3.select(this).property('value'));
+    console.log("Year selection changed", year);
+    drawGlobalPeaceIndexMap(year);
+    // drawLegend();
+})
+
 
 
 

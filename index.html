@@ -15,6 +15,7 @@
 
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
   <meta name="theme-color" content="#fafafa">
 
@@ -22,7 +23,10 @@
   <script type="text/javascript" src="js/topojson.js"></script>
   <script src="js/vendor/modernizr-3.11.2.min.js"></script>
   <script src="js/plugins.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="js/main.js" type="module"></script>
+
 </head>
 
 <body>
@@ -39,6 +43,16 @@
   <div style="width: 100%; display: flex;">
     <svg id="legend" style="width: 15%;"></svg>
     <svg id="map" style="flex-grow: 1; height:420px;"></svg>
+  </div>
+
+  <div style="margin-left: 50px">
+    <label for="year">year:</label>
+    <select name="year" id="year">
+      <option value="2021">2021</option>
+      <option value="2020">2020</option>
+      <option value="2019">2019</option>
+      <option value="2018">2018</option>
+    </select>
   </div>
 
   <p style="width: 1200px; margin-left: 50px;">
