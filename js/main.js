@@ -16,14 +16,15 @@ const color = d3.scaleQuantize()
   );
 
 let svg = d3.select("#map")
-  .call(d3.zoom().on("zoom", function (event, _) {
-  // console.log(event.transform);
-  let offset = [event.transform.x, event.transform.y];
-  let newScale = event.transform.k * 2000;
-  //Update projection with new offset and scale
-  projection.translate(offset).scale(newScale);
-  //Update all paths and circles
-  svg.selectAll("path").attr("d", path);
+  .call(d3.zoom().scaleExtent([0.1, 2.0])
+    .on("zoom", function (event, _) {
+      // console.log(event.transform);
+      let offset = [event.transform.x, event.transform.y];
+      let newScale = event.transform.k * 2000;
+      //Update projection with new offset and scale
+      projection.translate(offset).scale(newScale);
+      //Update all paths and circles
+      svg.selectAll("path").attr("d", path);
 }));
 
 let tooltip = d3.select('body')
