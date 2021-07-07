@@ -173,7 +173,7 @@ function drawLegend() {
     .attr("x", x)
     .attr("y", 300)
     .text("Source: Global Peace Index 2021")
-    .style("font-size", "20px")
+    .style("font-size", "18px")
     .attr("alignment-baseline","Left")
 }
 
