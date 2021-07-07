@@ -172,7 +172,7 @@ function drawLegend() {
   svg.append("text")
     .attr("x", x)
     .attr("y", 300)
-    .html("Source:" + <br/> + "Global Peace Index 2021")
+    .html("Source: <br/> Global Peace Index 2021")
     .style("font-size", "15px")
     .attr("alignment-baseline","Left")
 }
