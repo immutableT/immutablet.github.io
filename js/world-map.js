@@ -15,7 +15,7 @@ const color = d3.scaleQuantize()
     "rgb(196,58,31)"]
   );
 
-let svg = d3.select("#map")
+let svgWorldMap = d3.select("#map")
   .call(d3.zoom().scaleExtent([0.1, 2.0])
     .on("zoom", function (event, _) {
       // console.log(event.transform);
@@ -24,7 +24,7 @@ let svg = d3.select("#map")
       //Update projection with new offset and scale
       projection.translate(offset).scale(newScale);
       //Update all paths and circles
-      svg.selectAll("path").attr("d", path);
+      svgWorldMap.selectAll("path").attr("d", path);
 }));
 
 let tooltip = d3.select('body')
@@ -57,7 +57,7 @@ function drawGlobalPeaceIndexMap(year) {
         }
       }
 
-      svg.selectAll("path")
+      svgWorldMap.selectAll("path")
         .data(geojson.features)
         .enter()
         .append("path")
@@ -65,7 +65,7 @@ function drawGlobalPeaceIndexMap(year) {
         .style("fill", function(d) {
           let score = d.properties.value;
           if (score) {
-            console.log(`Found score of ${score} for ${d.properties.name}`)
+            // console.log(`Found score of ${score} for ${d.properties.name}`)
             return color(score);
           } else {
             //If value is undefined…
@@ -185,10 +185,13 @@ d3.select("#year")
     console.log("Year selection changed", e);
     let year = eval(d3.select(this).property('value'));
     console.log("Year selection changed", year);
-    svg.selectAll("path").remove();
+    svgWorldMap.selectAll("path").remove();
     drawGlobalPeaceIndexMap(year);
     // drawLegend();
 })
+
+
+
 
 
 
