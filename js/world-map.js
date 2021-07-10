@@ -100,7 +100,6 @@ function drawLegend() {
   let x = 50;
   let r = 6;
 
-
   svg.append("circle")
     .attr("cx", x)
     .attr("cy",100)
