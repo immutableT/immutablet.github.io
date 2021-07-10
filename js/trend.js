@@ -1,10 +1,11 @@
-let margin = {top: 20, right: 30, bottom: 40, left: 0},
+let margin = {top: 20, right: 30, bottom: 40, left: 30},
   width = 900 - margin.left - margin.right,
   height = 300 - margin.top - margin.bottom;
 
 let xScale = d3.scaleLinear().range([0, width]);
 let yScale = d3.scaleBand().domain([
   "Europe",
+  "North America",
   "Asia-Pacific",
   "CA and Caribbean",
   "Russia and Eurasia",
@@ -23,9 +24,8 @@ let svg = d3.select("#trend")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.csv("data/trend.csv").then(function(data) {
-  let min = d3.min(data, function(d) { return d['change']; });
-  let max = d3.max(data, function(d) { return d['change']; });
-  xScale.domain([min, max]);
+  xScale.domain(d3.extent(data, function (d) {return parseFloat(d['change'])})).nice();
+  console.log(`${xScale.domain()}`)
 
   svg.selectAll(".bar")
     .data(data)
