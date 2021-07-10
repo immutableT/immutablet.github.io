@@ -1,12 +1,12 @@
-let margin = {top: 20, right: 30, bottom: 40, left: 30},
-  width = 960 - margin.left - margin.right,
-  height = 500 - margin.top - margin.bottom;
+let margin = {top: 20, right: 30, bottom: 40, left: 0},
+  width = 900 - margin.left - margin.right,
+  height = 300 - margin.top - margin.bottom;
 
 let xScale = d3.scaleLinear().range([0, width]);
 let yScale = d3.scaleBand().domain([
   "Europe",
   "Asia-Pacific",
-  "Central America and the Caribbean",
+  "CA and Caribbean",
   "Russia and Eurasia",
   "Sub-Saharan Africa",
   "South-Asia",
