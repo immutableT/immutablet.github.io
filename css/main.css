@@ -102,10 +102,16 @@ div.tooltip {
 
 .bar--positive {
   fill: steelblue;
+  stroke-opacity: 1;
+  stroke-width:1;
+  stroke:black;
 }
 
 .bar--negative {
   fill: darkorange;
+  stroke-opacity: 1;
+  stroke-width:1;
+  stroke:black;
 }
 
 .axis text {

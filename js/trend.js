@@ -17,6 +17,9 @@ let yScale = d3.scaleBand().domain([
 let xAxis = d3.axisBottom(xScale);
 let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
 
+// No labels.
+// let yAxis = d3.axisLeft(yScale).tickValues([]);
+
 let svg = d3.select("#trend")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
@@ -25,7 +28,6 @@ let svg = d3.select("#trend")
 
 d3.csv("data/trend.csv").then(function(data) {
   xScale.domain(d3.extent(data, function (d) {return parseFloat(d['change'])})).nice();
-  console.log(`${xScale.domain()}`)
 
   svg.selectAll(".bar")
     .data(data)
@@ -46,5 +48,4 @@ d3.csv("data/trend.csv").then(function(data) {
     .attr("class", "y axis")
     .attr("transform", "translate(" + xScale(0) + ",0)")
     .call(yAxis);
-
 });
