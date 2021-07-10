@@ -169,12 +169,6 @@ function drawLegend() {
     .html("3.5" + "&#8595" + "Less Peaceful")
     .style("font-size", fontSize)
     .attr("alignment-baseline","middle")
-  svg.append("text")
-    .attr("x", x)
-    .attr("y", 300)
-    .html("Source: Global Peace Index")
-    .style("font-size", "15px")
-    .attr("alignment-baseline","Left")
 }
 
 drawGlobalPeaceIndexMap('2021');
