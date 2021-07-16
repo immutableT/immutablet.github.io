@@ -8,6 +8,7 @@ let yScale = d3.scaleBand().domain([
   "North America",
   "Asia-Pacific",
   "CA and Caribbean",
+  "South America",
   "Russia and Eurasia",
   "Sub-Saharan Africa",
   "South-Asia",
@@ -17,8 +18,10 @@ let yScale = d3.scaleBand().domain([
 let xAxis = d3.axisBottom(xScale);
 let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
 
-// No labels.
-// let yAxis = d3.axisLeft(yScale).tickValues([]);
+let tooltip = d3.select('body')
+  .append('div')
+  .attr('id', 'tooltip-barchart')
+  .attr("class", "tooltip-barchart");
 
 let svg = d3.select("#trend")
   .attr("width", width + margin.left + margin.right)
@@ -37,7 +40,24 @@ d3.csv("data/trend.csv").then(function(data) {
     .attr("x", function(d) { return xScale(Math.min(0, parseFloat(d['change']))); })
     .attr("y", function(d) { return yScale(d['region']); })
     .attr("width", function(d) { return Math.abs(xScale(parseFloat(d['change'])) - xScale(0)); })
-    .attr("height", yScale.bandwidth());
+    .attr("height", yScale.bandwidth())
+    .on("mouseover", function(d) {
+      console.log("mouseover event:", d);
+      console.log("mouseover event with data:", d3.select(this).data());
+      let score = parseFloat(d3.select(this).data()[0]['overall'])
+
+      tooltip.transition()
+        .duration(200)
+        .style("opacity", .9);
+      tooltip.html("overall score:" + "<br/>" + score)
+        .style('left', d.clientX + 'px')
+        .style('top', d.clientY + 'px')
+    })
+    .on("mouseout", function() {
+      tooltip.transition()
+        .duration(200)
+        .style("opacity", 0);
+    });
 
   svg.append("g")
     .attr("class", "x axis")
