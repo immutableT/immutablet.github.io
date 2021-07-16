@@ -7,7 +7,7 @@ let yScale = d3.scaleBand().domain([
   "Europe",
   "North America",
   "Asia-Pacific",
-  "CA and Caribbean",
+  "Central America and Caribbean",
   "South America",
   "Russia and Eurasia",
   "Sub-Saharan Africa",
