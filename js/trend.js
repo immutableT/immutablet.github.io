@@ -44,7 +44,8 @@ d3.csv("data/trend.csv").then(function(data) {
     .on("mouseover", function(d) {
       console.log("mouseover event:", d);
       console.log("mouseover event with data:", d3.select(this).data());
-      let score = parseFloat(d3.select(this).data()[0]['overall'])
+      let bar = d3.select(this)
+      let score = parseFloat(bar.data()[0]['overall'])
 
       tooltip.transition()
         .duration(200)
