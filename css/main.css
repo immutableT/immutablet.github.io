@@ -127,8 +127,13 @@ div.tooltip-barchart {
   stroke:black;
 }
 
-.axis text {
-  font: 10px sans-serif;
+.axis-x  {
+  font-family: sans-serif;
+}
+
+.axis-y {
+  font-family: sans-serif;
+  font-size: 12px;
 }
 
 .axis path,

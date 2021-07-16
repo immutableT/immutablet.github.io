@@ -1,5 +1,5 @@
 let margin = {top: 20, right: 30, bottom: 40, left: 30},
-  width = 900 - margin.left - margin.right,
+  width = 1230 - margin.left - margin.right,
   height = 300 - margin.top - margin.bottom;
 
 let xScale = d3.scaleLinear().range([0, width]);
@@ -60,12 +60,12 @@ d3.csv("data/trend.csv").then(function(data) {
     });
 
   svg.append("g")
-    .attr("class", "x axis")
+    .attr("class", "axis-x")
     .attr("transform", "translate(0," + height + ")")
     .call(xAxis);
 
   svg.append("g")
-    .attr("class", "y axis")
+    .attr("class", "axis-y")
     .attr("transform", "translate(" + xScale(0) + ",0)")
     .call(yAxis);
 });
