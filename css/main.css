@@ -48,3 +48,12 @@ div.tooltip-barchart {
   font-size: 12px;
 }
 
+#less-peaceful {
+  color: rgb(196,58,31);
+  margin-left: 340px;
+}
+
+#more-peaceful {
+  color: rgb(14,63,153);
+}
+

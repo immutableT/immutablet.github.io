@@ -17,7 +17,6 @@ const color = d3.scaleQuantize()
 let svgWorldMap = d3.select("#map");
 let zooming = function (event, _) {
   // console.log(event.transform);
-  console.log(`Center ${projection.center()}`)
   let offset = [event.transform.x, event.transform.y];
   let newScale = event.transform.k * 2000;
   //Update projection with new offset and scale
