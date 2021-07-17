@@ -7,6 +7,8 @@ let projection = d3.geoMercator()
   .center([0, 0.5])
   .scale(130)
   //.translate( [width / 2, height / 1.5]);
+let path = d3.geoPath().projection(projection);
+
 const color = d3.scaleQuantize()
   .range([
     "rgb(14,63,153)",
@@ -33,7 +35,6 @@ let tooltip = d3.select('body')
   .attr('id', 'tooltip-map')
   .attr("class", "tooltip-map");
 
-let path = d3.geoPath().projection(projection);
 
 function drawGlobalPeaceIndexMap(year) {
   console.log(`Generating map for year ${year}`)

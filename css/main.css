@@ -114,14 +114,14 @@ div.tooltip-barchart {
 }
 
 .bar--positive {
-  fill: steelblue;
+  fill: rgb(14,63,153);
   stroke-opacity: 1;
   stroke-width:1;
   stroke:black;
 }
 
 .bar--negative {
-  fill: darkorange;
+  fill: rgb(196,58,31);
   stroke-opacity: 1;
   stroke-width:1;
   stroke:black;
