@@ -4,11 +4,7 @@ let margin = {top: 0, right: 0, bottom: 0, left: 0};
 let width  = 860 - margin.left - margin.right;
 let height = 400 - margin.top - margin.bottom;
 let projection = d3.geoMercator()
-  .center([0, 0.5])
-  .scale(130)
-  //.translate( [width / 2, height / 1.5]);
 let path = d3.geoPath().projection(projection);
-
 const color = d3.scaleQuantize()
   .range([
     "rgb(14,63,153)",
@@ -21,6 +17,7 @@ const color = d3.scaleQuantize()
 let svgWorldMap = d3.select("#map");
 let zooming = function (event, _) {
   // console.log(event.transform);
+  console.log(`Center ${projection.center()}`)
   let offset = [event.transform.x, event.transform.y];
   let newScale = event.transform.k * 2000;
   //Update projection with new offset and scale
@@ -28,7 +25,13 @@ let zooming = function (event, _) {
   //Update all paths and circles
   svgWorldMap.selectAll("path").attr("d", path);
 }
-svgWorldMap.call(d3.zoom().scaleExtent([0.1, 2.0]).on("zoom", zooming));
+let zoom = d3.zoom().scaleExtent([0.05, 2.0]).on("zoom", zooming);
+
+svgWorldMap
+  .call(zoom)
+  .call(zoom.transform, d3.zoomIdentity
+  .translate(width/2, height/1.5)
+  .scale(0.06));
 
 let tooltip = d3.select('body')
   .append('div')
