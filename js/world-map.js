@@ -18,23 +18,22 @@ const color = d3.scaleQuantize()
     "rgb(196,58,31)"]
   );
 
-let svgWorldMap = d3.select("#map")
-  .call(d3.zoom().scaleExtent([0.1, 2.0])
-    .on("zoom", function (event, _) {
-      // console.log(event.transform);
-      let offset = [event.transform.x, event.transform.y];
-      let newScale = event.transform.k * 2000;
-      //Update projection with new offset and scale
-      projection.translate(offset).scale(newScale);
-      //Update all paths and circles
-      svgWorldMap.selectAll("path").attr("d", path);
-}));
+let svgWorldMap = d3.select("#map");
+let zooming = function (event, _) {
+  // console.log(event.transform);
+  let offset = [event.transform.x, event.transform.y];
+  let newScale = event.transform.k * 2000;
+  //Update projection with new offset and scale
+  projection.translate(offset).scale(newScale);
+  //Update all paths and circles
+  svgWorldMap.selectAll("path").attr("d", path);
+}
+svgWorldMap.call(d3.zoom().scaleExtent([0.1, 2.0]).on("zoom", zooming));
 
 let tooltip = d3.select('body')
   .append('div')
   .attr('id', 'tooltip-map')
   .attr("class", "tooltip-map");
-
 
 function drawGlobalPeaceIndexMap(year) {
   console.log(`Generating map for year ${year}`)
