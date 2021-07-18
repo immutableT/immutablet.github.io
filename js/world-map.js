@@ -99,7 +99,7 @@ function drawGlobalPeaceIndexMap(year) {
 }
 
 function drawLegend() {
-  let svg = d3.select("#legend");
+  let svg = d3.select("#map-legend");
   let x = 50;
   let r = 6;
 
