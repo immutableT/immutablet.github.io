@@ -1,10 +1,4 @@
 //import * as d3 from "./d3.min.js";
-
-let margin = {top: 0, right: 0, bottom: 0, left: 0};
-let width  = 860 - margin.left - margin.right;
-let height = 400 - margin.top - margin.bottom;
-let projection = d3.geoMercator()
-let path = d3.geoPath().projection(projection);
 const color = d3.scaleQuantize()
   .range([
     "rgb(14,63,153)",
@@ -14,7 +8,12 @@ const color = d3.scaleQuantize()
     "rgb(196,58,31)"]
   );
 
+let projection = d3.geoMercator()
+let path = d3.geoPath().projection(projection);
 let svgWorldMap = d3.select("#map");
+const width = parseInt(svgWorldMap.style("width").replace("px", ""));
+const height = parseInt(svgWorldMap.style("height").replace("px", ""));
+
 let zooming = function (event, _) {
   // console.log(event.transform);
   let offset = [event.transform.x, event.transform.y];
