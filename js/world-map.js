@@ -170,10 +170,12 @@ function drawLegend() {
 }
 
 function drawZoomButtons() {
+  const heightOffset = 30;
+  const withOffset = 70;
   let zoomIn = svgWorldMap.append("g")
     .attr("class", "zoom")
     .attr("id", "in")
-    .attr("transform", "translate(" + (width - 110) + "," + (height - 70) + ")");
+    .attr("transform", "translate(" + (width - 110) + "," + (height - heightOffset) + ")");
 
   zoomIn.append("rect")
     .attr("x", 0)
@@ -189,7 +191,7 @@ function drawZoomButtons() {
   let zoomOut = svgWorldMap.append("g")
     .attr("class", "zoom")
     .attr("id", "out")
-    .attr("transform", "translate(" + (width - 70) + "," + (height - 70) + ")");
+    .attr("transform", "translate(" + (width - 70) + "," + (height - heightOffset) + ")");
 
   zoomOut.append("rect")
     .attr("x", 0)
@@ -218,10 +220,8 @@ function drawZoomButtons() {
           break;
       }
 
-      //This triggers a zoom event, scaling by 'scaleFactor'
       svgWorldMap.transition()
         .call(zoom.scaleBy, scaleFactor);
-
     });
 
 }
