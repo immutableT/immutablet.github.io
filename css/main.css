@@ -71,3 +71,24 @@ div.tooltip-barchart {
   color: rgb(14,63,153);
 }
 
+.zoom rect {
+  fill: black;
+  opacity: 0.2;
+}
+
+.zoom rect {
+  rx: 5;  /* Rounded corners */
+  ry: 5;
+}
+
+.zoom text {
+  fill: black;
+  font-size: 18px;
+  text-anchor: middle;
+}
+
+.zoom:hover rect,
+.zoom:hover text {
+  fill: blue;
+}
+

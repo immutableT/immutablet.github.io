@@ -169,7 +169,65 @@ function drawLegend() {
     .attr("alignment-baseline","middle")
 }
 
+function drawZoomButtons() {
+  let zoomIn = svgWorldMap.append("g")
+    .attr("class", "zoom")
+    .attr("id", "in")
+    .attr("transform", "translate(" + (width - 110) + "," + (height - 70) + ")");
+
+  zoomIn.append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", 30)
+    .attr("height", 30);
+
+  zoomIn.append("text")
+    .attr("x", 15)
+    .attr("y", 20)
+    .text("+");
+
+  let zoomOut = svgWorldMap.append("g")
+    .attr("class", "zoom")
+    .attr("id", "out")
+    .attr("transform", "translate(" + (width - 70) + "," + (height - 70) + ")");
+
+  zoomOut.append("rect")
+    .attr("x", 0)
+    .attr("y", 0)
+    .attr("width", 30)
+    .attr("height", 30);
+
+  zoomOut.append("text")
+    .attr("x", 15)
+    .attr("y", 20)
+    .html("&ndash;");
+
+  d3.selectAll(".zoom")
+    .on("click", function() {
+      let scaleFactor;
+      let direction = d3.select(this).attr("id");
+
+      switch (direction) {
+        case "in":
+          scaleFactor = 1.5;
+          break;
+        case "out":
+          scaleFactor = 0.75;
+          break;
+        default:
+          break;
+      }
+
+      //This triggers a zoom event, scaling by 'scaleFactor'
+      svgWorldMap.transition()
+        .call(zoom.scaleBy, scaleFactor);
+
+    });
+
+}
+
 drawGlobalPeaceIndexMap('2021');
+drawZoomButtons();
 drawLegend();
 
 d3.select("#year")
