@@ -15,12 +15,9 @@ const width = parseInt(svgWorldMap.style("width").replace("px", ""));
 const height = parseInt(svgWorldMap.style("height").replace("px", ""));
 
 let zooming = function (event, _) {
-  // console.log(event.transform);
   let offset = [event.transform.x, event.transform.y];
   let newScale = event.transform.k * 2000;
-  //Update projection with new offset and scale
   projection.translate(offset).scale(newScale);
-  //Update all paths and circles
   svgWorldMap.selectAll("path").attr("d", path);
 }
 let zoom = d3.zoom().scaleExtent([0.05, 2.0]).on("zoom", zooming);
