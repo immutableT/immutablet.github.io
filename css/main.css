@@ -1,6 +1,6 @@
 .global-peace-index-map {
   display: flex;
-  width: 100%;
+  width: 70%;
 }
 
 #map {
@@ -39,14 +39,14 @@ div.tooltip-barchart {
   opacity: 0;
 }
 
-.bar--positive {
+.positive {
   fill: rgb(14,63,153);
   stroke-opacity: 1;
   stroke-width:1;
   stroke:black;
 }
 
-.bar--negative {
+.negative {
   fill: rgb(196,58,31);
   stroke-opacity: 1;
   stroke-width:1;

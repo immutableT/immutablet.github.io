@@ -4,15 +4,13 @@ let margin = {top: 20, right: 30, bottom: 40, left: 30},
 
 let xScale = d3.scaleLinear().range([0, width]);
 let yScale = d3.scaleBand().domain([
+  "Africa",
+  "South/Latin America",
   "Europe",
+  "Arab States",
+  "Middle East",
   "North America",
-  "Asia-Pacific",
-  "Central America and Caribbean",
-  "South America",
-  "Russia and Eurasia",
-  "Sub-Saharan Africa",
-  "South-Asia",
-  "Middle East and North Africa"
+  "Asia & Pacific",
 ]).range([0, height]);
 
 let xAxis = d3.axisBottom(xScale);
@@ -29,44 +27,64 @@ let svg = d3.select("#trend")
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.csv("data/trend.csv").then(function(data) {
-  xScale.domain(d3.extent(data, function (d) {return parseFloat(d['change'])})).nice();
+function drawGlobalPeaceIndexTrendBarchart(year) {
+  d3.csv("data/gpi-by-region.csv").then(function(data) {
 
-  svg.selectAll(".bar")
-    .data(data)
-    .enter()
-    .append("rect")
-    .attr("class", function(d) { return "bar bar--" + (parseFloat(d['change']) < 0 ? "negative" : "positive"); })
-    .attr("x", function(d) { return xScale(Math.min(0, parseFloat(d['change']))); })
-    .attr("y", function(d) { return yScale(d['region']); })
-    .attr("width", function(d) { return Math.abs(xScale(parseFloat(d['change'])) - xScale(0)); })
-    .attr("height", yScale.bandwidth())
-    .on("mouseover", function(d) {
-      console.log("mouseover event:", d);
-      console.log("mouseover event with data:", d3.select(this).data());
-      let bar = d3.select(this)
-      let score = parseFloat(bar.data()[0]['overall'])
+    let previousYear = (parseInt(year) - 1).toString();
+    let delta = function(d) {
+      let yearVal = parseFloat(d[year])
+      let prevYearVal = parseFloat(d[previousYear]);
+      return yearVal - prevYearVal;
+    }
 
-      tooltip.transition()
-        .duration(200)
-        .style("opacity", .9);
-      tooltip.html("overall score:" + "<br/>" + score)
-        .style('left', d.clientX + 'px')
-        .style('top', d.clientY + 'px')
-    })
-    .on("mouseout", function() {
-      tooltip.transition()
-        .duration(200)
-        .style("opacity", 0);
-    });
+    let getStyle = function(d) {
+      if (delta(d) > 0) {
+        return "positive";
+      }
 
-  svg.append("g")
-    .attr("class", "axis-x")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
+      return "negative"
+    }
 
-  svg.append("g")
-    .attr("class", "axis-y")
-    .attr("transform", "translate(" + xScale(0) + ",0)")
-    .call(yAxis);
-});
+    xScale.domain(d3.extent(data, delta)).nice();
+
+    svg.selectAll(".bar")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("class", getStyle)
+      .attr("x", function(d) { return xScale(Math.min(0, delta(d))); })
+      .attr("y", function(d) { return yScale(d['Region']); })
+      .attr("width", function(d) { return Math.abs(xScale(delta(d)) - xScale(0)); })
+      .attr("height", yScale.bandwidth())
+      .on("mouseover", function(d) {
+        console.log("mouseover event:", d);
+        console.log("mouseover event with data:", d3.select(this).data());
+        let bar = d3.select(this)
+        let score = parseFloat(bar.data()[0][year]).toFixed(2);
+
+        tooltip.transition()
+          .duration(200)
+          .style("opacity", .9);
+        tooltip.html("overall score:" + "<br/>" + score)
+          .style('left', d.clientX + 'px')
+          .style('top', d.clientY + 'px')
+      })
+      .on("mouseout", function() {
+        tooltip.transition()
+          .duration(200)
+          .style("opacity", 0);
+      });
+
+    svg.append("g")
+      .attr("class", "axis-x")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+    svg.append("g")
+      .attr("class", "axis-y")
+      .attr("transform", "translate(" + xScale(0) + ",0)")
+      .call(yAxis);
+  });
+}
+
+drawGlobalPeaceIndexTrendBarchart('2021');
