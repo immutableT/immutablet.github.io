@@ -21,16 +21,16 @@ let tooltip = d3.select('body')
   .attr('id', 'tooltip-barchart')
   .attr("class", "tooltip-barchart");
 
-let svg = d3.select("#trend")
-  .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
 export function drawGlobalPeaceIndexTrendBarchart(year) {
   console.log(`Generating barchart for year ${year}`);
-  d3.csv("data/gpi-by-region.csv").then(function(data) {
 
+  let svg = d3.select("#trend")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  d3.csv("data/gpi-by-region.csv").then(function(data) {
     let previousYear = (parseInt(year) - 1).toString();
     let delta = function(d) {
       let yearVal = parseFloat(d[year])

@@ -17,6 +17,33 @@
 </head>
 
 <body>
+
+  <script type="module">
+    import {drawGlobalPeaceIndexMap} from "./js/world-map.js";
+    import {drawLegend} from "./js/world-map.js";
+    import {drawZoomButtons} from "./js/world-map.js";
+    import {drawGlobalPeaceIndexTrendBarchart} from "./js/trend.js";
+
+    drawGlobalPeaceIndexMap('2021');
+    drawLegend('2021');
+    drawZoomButtons();
+    drawGlobalPeaceIndexTrendBarchart('2021');
+
+
+    d3.select("#year")
+      .on("change", function(e) {
+        // console.log("Year selection changed", e);
+        let year = eval(d3.select(this).property('value'));
+
+        d3.select("#map").selectAll("path").remove();
+        drawGlobalPeaceIndexMap(year);
+
+        d3.select("#trend").selectAll("g").remove();
+        drawGlobalPeaceIndexTrendBarchart(year);
+      })
+
+  </script>
+
   <h1 style="margin-left: 50px">Is the golden age of peace is here to last?</h1>
   <p style="width: 1200px; margin-left: 50px;">
     THERE ARE often clear signs that a country is sliding into conflict or crisis.
@@ -63,18 +90,7 @@
     </div>
   </div>
 
-  <script type="module">
-    import {drawGlobalPeaceIndexMap} from "./js/world-map.js";
-    import {drawLegend} from "./js/world-map.js";
-    import {drawZoomButtons} from "./js/world-map.js";
-    import {drawGlobalPeaceIndexTrendBarchart} from "./js/trend.js";
 
-    drawGlobalPeaceIndexMap('2021');
-    drawLegend('2021');
-    drawZoomButtons();
-    drawGlobalPeaceIndexTrendBarchart('2021');
-
-  </script>
 </body>
 
 </html>
