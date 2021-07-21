@@ -48,7 +48,7 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
 
     xScale.domain(d3.extent(data, delta)).nice();
 
-    svg.selectAll(".bar")
+    svg.selectAll("rect")
       .data(data)
       .enter()
       .append("rect")
