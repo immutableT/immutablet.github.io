@@ -28,6 +28,7 @@ let svg = d3.select("#trend")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 function drawGlobalPeaceIndexTrendBarchart(year) {
+  console.log(`Generating barchart for year ${year}`);
   d3.csv("data/gpi-by-region.csv").then(function(data) {
 
     let previousYear = (parseInt(year) - 1).toString();

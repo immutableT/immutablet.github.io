@@ -76,6 +76,17 @@
       <b>Source: Global Peace Index 2020-21</b>
     </div>
   </div>
+
+  <script type="module">
+    import {drawGlobalPeaceIndexMap} from "./js/world-map.js";
+    import {drawLegend} from "./js/world-map.js";
+    import {drawZoomButtons} from "./js/world-map.js";
+
+    drawGlobalPeaceIndexMap('2021')
+    drawLegend('2021')
+    drawZoomButtons();
+
+  </script>
 </body>
 
 </html>

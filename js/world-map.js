@@ -33,7 +33,7 @@ let tooltip = d3.select('body')
   .attr('id', 'tooltip-map')
   .attr("class", "tooltip-map");
 
-function drawGlobalPeaceIndexMap(year) {
+export function drawGlobalPeaceIndexMap(year) {
   console.log(`Generating map for year ${year}`)
   d3.csv("data/overall.csv").then(function(data) {
     let min = d3.min(data, function(d) { return d[year]; });
@@ -94,7 +94,7 @@ function drawGlobalPeaceIndexMap(year) {
   });
 }
 
-function drawLegend() {
+export function drawLegend() {
   let svg = d3.select("#map-legend");
   let x = 50;
   let r = 6;
@@ -169,7 +169,7 @@ function drawLegend() {
     .attr("alignment-baseline","middle")
 }
 
-function drawZoomButtons() {
+export function drawZoomButtons() {
   const heightOffset = 30;
   const withOffset = 70;
   let zoomIn = svgWorldMap.append("g")
@@ -226,18 +226,12 @@ function drawZoomButtons() {
 
 }
 
-drawGlobalPeaceIndexMap('2021');
-drawZoomButtons();
-drawLegend();
-
 d3.select("#year")
   .on("change", function(e) {
     console.log("Year selection changed", e);
     let year = eval(d3.select(this).property('value'));
-    console.log("Year selection changed", year);
     svgWorldMap.selectAll("path").remove();
     drawGlobalPeaceIndexMap(year);
-    // drawLegend();
 })
 
 
