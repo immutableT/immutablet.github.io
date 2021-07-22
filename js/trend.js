@@ -24,6 +24,7 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  let tooltip = d3.select("#tooltip-barchart");
 
   d3.csv("data/gpi-by-region.csv").then(function(data) {
     let previousYear = (parseInt(year) - 1).toString();
@@ -42,7 +43,6 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
     }
 
     xScale.domain(d3.extent(data, delta)).nice();
-    let tooltip = d3.select("#tooltip-barchart")
 
     svg.selectAll("rect")
       .data(data)
@@ -54,11 +54,9 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
       .attr("width", function(d) { return Math.abs(xScale(delta(d)) - xScale(0)); })
       .attr("height", yScale.bandwidth())
       .on("mouseover", function(d) {
-        console.log("mouseover event:", d);
         console.log("mouseover event with data:", d3.select(this).data());
         let bar = d3.select(this)
         let score = parseFloat(bar.data()[0][year]).toFixed(2);
-
 
         tooltip.transition()
           .duration(200)
