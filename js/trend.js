@@ -1,23 +1,25 @@
-let margin = {top: 20, right: 30, bottom: 40, left: 30};
-const width = 1230;
-const height = 300;
 
-let xScale = d3.scaleLinear().range([0, width - margin.left - margin.right]);
-let yScale = d3.scaleBand().domain([
-  "Africa",
-  "South/Latin America",
-  "Europe",
-  "Arab States",
-  "Middle East",
-  "North America",
-  "Asia & Pacific",
-]).range([0, height - margin.top - margin.bottom]);
-
-let xAxis = d3.axisBottom(xScale);
-let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
 
 export function drawGlobalPeaceIndexTrendBarchart(year) {
   console.log(`Generating barchart for year ${year}`);
+
+  let margin = {top: 20, right: 30, bottom: 40, left: 30};
+  const width = 1230;
+  const height = 300;
+
+  let xScale = d3.scaleLinear().range([0, width - margin.left - margin.right]);
+  let yScale = d3.scaleBand().domain([
+    "Africa",
+    "South/Latin America",
+    "Europe",
+    "Arab States",
+    "Middle East",
+    "North America",
+    "Asia & Pacific",
+  ]).range([0, height - margin.top - margin.bottom]);
+
+  let xAxis = d3.axisBottom(xScale);
+  let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
 
   let svg = d3.select("#trend")
     .attr("width", width)
