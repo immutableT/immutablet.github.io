@@ -42,6 +42,7 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
     }
 
     xScale.domain(d3.extent(data, delta)).nice();
+    let tooltip = d3.select("#tooltip-barchart")
 
     svg.selectAll("rect")
       .data(data)
@@ -58,9 +59,8 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
         let bar = d3.select(this)
         let score = parseFloat(bar.data()[0][year]).toFixed(2);
 
-        let tooltip = d3.select("#tooltip-barchart")
-        tooltip
-          .transition()
+
+        tooltip.transition()
           .duration(200)
           .style("opacity", .9);
         tooltip.html("overall score:" + "<br/>" + score)
