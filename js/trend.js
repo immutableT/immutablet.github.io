@@ -1,6 +1,6 @@
-let margin = {top: 20, right: 30, bottom: 40, left: 30},
-  width = 1230 - margin.left - margin.right,
-  height = 300 - margin.top - margin.bottom;
+let margin = {top: 20, right: 30, bottom: 40, left: 30};
+const width = 1230 - margin.left - margin.right;
+const height = 300 - margin.top - margin.bottom;
 
 let xScale = d3.scaleLinear().range([0, width]);
 let yScale = d3.scaleBand().domain([
