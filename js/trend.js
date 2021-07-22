@@ -1,6 +1,6 @@
 let margin = {top: 20, right: 30, bottom: 40, left: 30};
 const width = 1230;
-const height = 300 - margin.top - margin.bottom;
+const height = 300;
 
 let xScale = d3.scaleLinear().range([0, width - margin.left - margin.right]);
 let yScale = d3.scaleBand().domain([
@@ -11,7 +11,7 @@ let yScale = d3.scaleBand().domain([
   "Middle East",
   "North America",
   "Asia & Pacific",
-]).range([0, height]);
+]).range([0, height - margin.top - margin.bottom]);
 
 let xAxis = d3.axisBottom(xScale);
 let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
@@ -21,7 +21,7 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
 
   let svg = d3.select("#trend")
     .attr("width", width)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("height", height)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
   let tooltip = d3.select("#tooltip-barchart");
@@ -73,7 +73,7 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
 
     svg.append("g")
       .attr("class", "axis-x")
-      .attr("transform", "translate(0," + height + ")")
+      .attr("transform", "translate(0," + (height - margin.top - margin.bottom) + ")")
       .call(xAxis);
 
     svg.append("g")
