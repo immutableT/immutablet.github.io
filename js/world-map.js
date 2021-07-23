@@ -28,10 +28,7 @@ svgWorldMap
   .translate(width/2, height/1.5)
   .scale(0.06));
 
-let tooltip = d3.select('body')
-  .append('div')
-  .attr('id', 'tooltip-map')
-  .attr("class", "tooltip-map");
+let tooltip = d3.select('#tooltip-map');
 
 export function drawGlobalPeaceIndexMap(year) {
   console.log(`Generating map for year ${year}`)
