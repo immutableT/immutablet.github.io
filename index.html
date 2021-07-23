@@ -39,7 +39,7 @@
         drawGlobalPeaceIndexTrendBarchart(year);
 
         let previousYear = (parseInt(year) - 1).toString();
-        d3.select("#trend-header").html(`Change in score from ${previousYear} to ${year}`);
+        d3.select("#trend-header").html(`Change in score from ${previousYear} to ${year} <br/> <span id="less-peaceful">less peaceful/</span><span id="more-peaceful">more peaceful</span>`);
       })
 
   </script>
@@ -81,8 +81,6 @@
   <div style="margin-left: 50px">
     <div style="font-size: 20px">
       <b id="trend-header"><br/></b>
-      <span id="less-peaceful">less peaceful/</span>
-      <span id="more-peaceful">more peaceful</span>
     </div>
     <svg id="trend" class="trend-by-region"></svg>
     <div>
