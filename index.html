@@ -25,6 +25,7 @@
     drawLegend('2021');
     drawZoomButtons();
     drawGlobalPeaceIndexTrendBarchart('2021');
+    d3.select("#trend-header").html("Change in score from 2020 to 2021");
 
     d3.select("#year")
       .on("change", function(e) {
@@ -36,6 +37,9 @@
 
         d3.select("#trend").selectAll("g").remove();
         drawGlobalPeaceIndexTrendBarchart(year);
+
+        let previousYear = (parseInt(year) - 1).toString();
+        d3.select("#trend-header").html(`Change in score from ${previousYear} to ${year}`);
       })
 
   </script>
@@ -76,7 +80,7 @@
 
   <div style="margin-left: 50px">
     <div style="font-size: 20px">
-      <b>Change in score since 2020-21<br/></b>
+      <b id="trend-header"><br/></b>
       <span id="less-peaceful">less peaceful/</span>
       <span id="more-peaceful">more peaceful</span>
     </div>
