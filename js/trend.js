@@ -1,11 +1,10 @@
-
-
 export function drawGlobalPeaceIndexTrendBarchart(year) {
   console.log(`Generating barchart for year ${year}`);
 
-  let margin = {top: 20, right: 30, bottom: 40, left: 30};
-  const width = 1230;
-  const height = 300;
+  const margin = {top: 20, right: 30, bottom: 40, left: 30};
+  // TODO: Initializing svg here breaks padding for some reason;
+  const width = parseInt(d3.select("#trend").style("width").replace("px", ""));
+  const height = parseInt(d3.select("#trend").style("height").replace("px", ""));;
 
   let xScale = d3.scaleLinear().range([0, width - margin.left - margin.right]);
   let yScale = d3.scaleBand().domain([
@@ -22,21 +21,20 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
   let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
 
   let svg = d3.select("#trend")
-    .attr("width", width)
-    .attr("height", height)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
   let tooltip = d3.select("#tooltip-barchart");
 
   d3.csv("data/gpi-by-region.csv").then(function(data) {
     let previousYear = (parseInt(year) - 1).toString();
-    let delta = function(d) {
+
+    function delta(d) {
       let yearVal = parseFloat(d[year])
       let prevYearVal = parseFloat(d[previousYear]);
       return yearVal - prevYearVal;
     }
 
-    let getStyle = function(d) {
+    function getStyle(d) {
       if (delta(d) > 0) {
         return "positive";
       }

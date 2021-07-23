@@ -3,6 +3,11 @@
   width: 70%;
 }
 
+.trend-by-region {
+  width: 1230px;
+  height: 300px;
+}
+
 #map {
   flex-grow: 1;
   height:420px;
