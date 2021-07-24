@@ -63,6 +63,20 @@ function setFill(data) {
   }
 }
 
+function attachTooltip(d) {
+  let country = d3.select(this).data()[0].properties.name
+  let score = d3.select(this).data()[0].properties.value
+  if (!score) {
+    score = "data not available"
+  }
+  tooltip.transition()
+    .duration(200)
+    .style("opacity", .9);
+  tooltip.html(country + "<br/>" + score)
+    .style('left', d.clientX + 'px')
+    .style('top', d.clientY + 'px')
+}
+
 export function CreateGPIMap(year) {
   console.log(`Generating map for year ${year}`);
   d3.csv("data/overall.csv").then(function(data) {
@@ -76,20 +90,7 @@ export function CreateGPIMap(year) {
         .append("path")
         .attr("d", path)
         .style("fill", setFill)
-        .on("mouseover", function(d) {
-          // console.log("mouseover event:", d);
-          let country = d3.select(this).data()[0].properties.name
-          let score = d3.select(this).data()[0].properties.value
-          if (!score) {
-            score = "data not available"
-          }
-          tooltip.transition()
-            .duration(200)
-            .style("opacity", .9);
-          tooltip.html(country + "<br/>" + score)
-            .style('left', d.clientX + 'px')
-            .style('top', d.clientY + 'px')
-        })
+        .on("mouseover", attachTooltip)
         .on("mouseout", function() {
           tooltip.transition()
             .duration(200)
