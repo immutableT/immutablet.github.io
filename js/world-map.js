@@ -52,6 +52,17 @@ function setColorDomain(data, year) {
   color.domain([min, max]);
 }
 
+function setFill(data) {
+  let score = data.properties.value;
+  if (score) {
+    // console.log(`Found score of ${score} for ${d.properties.name}`)
+    return color(score);
+  } else {
+    //If value is undefined…
+    return "#ccc";
+  }
+}
+
 export function CreateGPIMap(year) {
   console.log(`Generating map for year ${year}`)
   d3.csv("data/overall.csv").then(function(data) {
@@ -59,22 +70,12 @@ export function CreateGPIMap(year) {
 
     d3.json("data/world.geo.json").then(function(geojson) {
       attachScore(data, year, geojson);
-
       svg.selectAll("path")
         .data(geojson.features)
         .enter()
         .append("path")
         .attr("d", path)
-        .style("fill", function(d) {
-          let score = d.properties.value;
-          if (score) {
-            // console.log(`Found score of ${score} for ${d.properties.name}`)
-            return color(score);
-          } else {
-            //If value is undefined…
-            return "#ccc";
-          }
-        })
+        .style("fill", setFill)
         .on("mouseover", function(d) {
           // console.log("mouseover event:", d);
           let country = d3.select(this).data()[0].properties.name
