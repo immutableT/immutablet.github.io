@@ -16,6 +16,7 @@
 <body>
   <script type="module">
     import {CreateGPIMap} from "./js/world-map.js";
+    import {UpdateGPIMap} from "./js/world-map.js";
     import {drawLegend} from "./js/world-map.js";
     import {drawZoomButtons} from "./js/world-map.js";
     import {CreateGPITrendBarchart} from "./js/trend.js";
@@ -32,10 +33,7 @@
     d3.select("#year")
       .on("change", function(e) {
         let year = eval(d3.select(this).property('value'));
-
-        d3.select("#map").selectAll("path").remove();
-        CreateGPIMap(year);
-
+        UpdateGPIMap(year);
         UpdateGPITrendBarchart(year);
         let previousYear = (parseInt(year) - 1).toString();
         d3.select("#trend-header").html(`Change in score from ${previousYear} to ${year}${barchartLegend}`);

@@ -64,7 +64,7 @@ function setFill(data) {
 }
 
 export function CreateGPIMap(year) {
-  console.log(`Generating map for year ${year}`)
+  console.log(`Generating map for year ${year}`);
   d3.csv("data/overall.csv").then(function(data) {
     setColorDomain(data, year)
 
@@ -98,6 +98,22 @@ export function CreateGPIMap(year) {
     });
   });
 }
+
+export function UpdateGPIMap(year) {
+  console.log(`Generating update for year ${year}`);
+  d3.csv("data/overall.csv").then(function(data) {
+    setColorDomain(data, year)
+
+    d3.json("data/world.geo.json").then(function(geojson) {
+      attachScore(data, year, geojson);
+      svg.selectAll("path")
+        .data(geojson.features)
+        .transition()
+        .style("fill", setFill)
+    });
+  });
+}
+
 
 export function drawLegend() {
   let svg = d3.select("#map-legend");
