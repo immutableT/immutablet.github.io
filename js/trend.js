@@ -33,7 +33,7 @@ function getStyle(d, year, previousYear) {
   return "negative"
 }
 
-export function drawGlobalPeaceIndexTrendBarchart(year) {
+export function CreateGPITrendBarchart(year) {
   console.log(`Generating barchart for year ${year}`);
   let xScale = getXScale();
   let yScale = getYScale();

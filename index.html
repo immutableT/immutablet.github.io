@@ -18,12 +18,12 @@
     import {drawGlobalPeaceIndexMap} from "./js/world-map.js";
     import {drawLegend} from "./js/world-map.js";
     import {drawZoomButtons} from "./js/world-map.js";
-    import {drawGlobalPeaceIndexTrendBarchart} from "./js/trend.js";
+    import {CreateGPITrendBarchart} from "./js/trend.js";
 
     drawGlobalPeaceIndexMap('2021');
     drawLegend('2021');
     drawZoomButtons();
-    drawGlobalPeaceIndexTrendBarchart('2021');
+    CreateGPITrendBarchart('2021');
 
     const barchartLegend = '<br/><span id="less-peaceful">less peaceful/</span><span id="more-peaceful">more peaceful</span>'
     d3.select("#trend-header").html(`Change in score from 2020 to 2021 ${barchartLegend}`);
@@ -36,7 +36,7 @@
         drawGlobalPeaceIndexMap(year);
 
         d3.select("#trend").selectAll("g").remove();
-        drawGlobalPeaceIndexTrendBarchart(year);
+        CreateGPITrendBarchart(year);
 
         let previousYear = (parseInt(year) - 1).toString();
         d3.select("#trend-header").html(`Change in score from ${previousYear} to ${year}${barchartLegend}`);
