@@ -19,6 +19,20 @@ function getYScale() {
     .paddingInner(0.05);
 }
 
+function delta(d, year, previousYear) {
+  let yearVal = parseFloat(d[year])
+  let prevYearVal = parseFloat(d[previousYear]);
+  return yearVal - prevYearVal;
+}
+
+function getStyle(d, year, previousYear) {
+  if (delta(d, year, previousYear) > 0) {
+    return "positive";
+  }
+
+  return "negative"
+}
+
 export function drawGlobalPeaceIndexTrendBarchart(year) {
   console.log(`Generating barchart for year ${year}`);
   let xScale = getXScale();
@@ -34,31 +48,16 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
 
   d3.csv("data/gpi-by-region.csv").then(function(data) {
     let previousYear = (parseInt(year) - 1).toString();
-
-    function delta(d) {
-      let yearVal = parseFloat(d[year])
-      let prevYearVal = parseFloat(d[previousYear]);
-      return yearVal - prevYearVal;
-    }
-
-    function getStyle(d) {
-      if (delta(d) > 0) {
-        return "positive";
-      }
-
-      return "negative"
-    }
-
-    xScale.domain(d3.extent(data, delta)).nice();
+    xScale.domain(d3.extent(data, function(d) { return delta(d, year, previousYear)})).nice();
 
     svg.selectAll("rect")
       .data(data)
       .enter()
       .append("rect")
-      .attr("class", getStyle)
-      .attr("x", function(d) { return xScale(Math.min(0, delta(d))); })
+      .attr("class", function(d) {return getStyle(d, year, previousYear)})
+      .attr("x", function(d) { return xScale(Math.min(0, delta(d, year, previousYear))); })
       .attr("y", function(d) { return yScale(d['Region']); })
-      .attr("width", function(d) { return Math.abs(xScale(delta(d)) - xScale(0)); })
+      .attr("width", function(d) { return Math.abs(xScale(delta(d, year, previousYear)) - xScale(0)); })
       .attr("height", yScale.bandwidth())
       .on("mouseover", function(d) {
         console.log("mouseover event with data:", d3.select(this).data());
