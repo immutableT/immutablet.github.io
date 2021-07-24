@@ -191,12 +191,8 @@ export function drawLegend() {
 }
 
 export function drawZoomButtons() {
-  const heightOffset = 30;
-  const withOffset = 70;
-  let zoomIn = svg.append("g")
-    .attr("class", "zoom")
-    .attr("id", "in")
-    .attr("transform", "translate(" + (width - 110) + "," + (height - heightOffset) + ")");
+  let zoomIn = d3.select("#zoom-in");
+  let zoomOut = d3.select("#zoom-out");
 
   zoomIn.append("rect")
     .attr("x", 0)
@@ -208,11 +204,6 @@ export function drawZoomButtons() {
     .attr("x", 15)
     .attr("y", 20)
     .text("+");
-
-  let zoomOut = svg.append("g")
-    .attr("class", "zoom")
-    .attr("id", "out")
-    .attr("transform", "translate(" + (width - 70) + "," + (height - heightOffset) + ")");
 
   zoomOut.append("rect")
     .attr("x", 0)
@@ -231,10 +222,10 @@ export function drawZoomButtons() {
       let direction = d3.select(this).attr("id");
 
       switch (direction) {
-        case "in":
+        case "zoom-in":
           scaleFactor = 1.5;
           break;
-        case "out":
+        case "zoom-out":
           scaleFactor = 0.75;
           break;
         default:

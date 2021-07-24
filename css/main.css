@@ -3,11 +3,6 @@
   width: 70%;
 }
 
-.trend-by-region {
-  width: 1230px;
-  height: 300px;
-}
-
 #map {
   flex-grow: 1;
   height:420px;
@@ -15,6 +10,11 @@
 
 #map-legend {
   width: 15%;
+}
+
+.trend-by-region {
+  width: 1230px;
+  height: 300px;
 }
 
 div.tooltip-map {
@@ -78,9 +78,6 @@ div.tooltip-barchart {
 .zoom rect {
   fill: black;
   opacity: 0.2;
-}
-
-.zoom rect {
   rx: 5;  /* Rounded corners */
   ry: 5;
 }
