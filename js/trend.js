@@ -103,6 +103,7 @@ export function UpdateGPITrendBarchart(year) {
 
     svg.selectAll("rect")
       .data(data)
+      .transition()
       .attr("class", function(d) {return getStyle(d, year, previousYear)})
       .attr("x", function(d) { return xScale(Math.min(0, delta(d, year, previousYear))); })
       .attr("width", function(d) { return Math.abs(xScale(delta(d, year, previousYear)) - xScale(0)); })
