@@ -30,28 +30,31 @@ svg
 
 let tooltip = d3.select('#tooltip-map');
 
+function attachScore(data, year, geojson) {
+  for (let i = 0; i < data.length; i++) {
+    let dataCountry = data[i].Country;
+    let score = parseFloat(data[i][year]);
+    // console.log(`${dataCountry} ${score}`)
+
+    for (let j = 0; j < geojson.features.length; j++) {
+      if (dataCountry === geojson.features[j].properties.name) {
+        geojson.features[j].properties.value = score;
+        // console.log(`Matched ${dataCountry}`)
+        break;
+      }
+    }
+  }
+}
+
 export function drawGlobalPeaceIndexMap(year) {
   console.log(`Generating map for year ${year}`)
   d3.csv("data/overall.csv").then(function(data) {
     let min = d3.min(data, function(d) { return d[year]; });
     let max = d3.max(data, function(d) { return d[year]; });
-
     color.domain([min, max]);
 
     d3.json("data/world.geo.json").then(function(geojson) {
-      for (let i = 0; i < data.length; i++) {
-        let dataCountry = data[i].Country;
-        let score = parseFloat(data[i][year]);
-        // console.log(`${dataCountry} ${score}`)
-
-        for (let j = 0; j < geojson.features.length; j++) {
-          if (dataCountry === geojson.features[j].properties.name) {
-            geojson.features[j].properties.value = score;
-            // console.log(`Matched ${dataCountry}`)
-            break;
-          }
-        }
-      }
+      attachScore(data, year, geojson);
 
       svg.selectAll("path")
         .data(geojson.features)
@@ -222,15 +225,6 @@ export function drawZoomButtons() {
     });
 
 }
-
-d3.select("#year")
-  .on("change", function(e) {
-    console.log("Year selection changed", e);
-    let year = eval(d3.select(this).property('value'));
-    svg.selectAll("path").remove();
-    drawGlobalPeaceIndexMap(year);
-})
-
 
 
 
