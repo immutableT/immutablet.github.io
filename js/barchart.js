@@ -8,3 +8,17 @@ export function GetYScale(containerID, domain, martinTop, marginBottom) {
   return d3.scaleBand().domain(domain).rangeRound([0, height - martinTop - marginBottom])
     .paddingInner(0.05);
 }
+
+export function GetDelta(d, year, previousYear) {
+  let yearVal = parseFloat(d[year])
+  let prevYearVal = parseFloat(d[previousYear]);
+  return yearVal - prevYearVal;
+}
+
+export function GetStyle(d, year, previousYear) {
+  if (GetDelta(d, year, previousYear) > 0) {
+    return "positive";
+  }
+
+  return "negative"
+}

@@ -1,8 +1,9 @@
 import { GetYScale } from "./barchart.js";
 import { GetXScale } from "./barchart.js";
+import { GetDelta } from "./barchart.js";
+import { GetStyle } from "./barchart.js";
 
 const margin = {top: 20, right: 30, bottom: 40, left: 30};
-
 const yDomain = [
   "Africa",
   "South/Latin America",
@@ -12,20 +13,6 @@ const yDomain = [
   "North America",
   "Asia & Pacific",
 ]
-
-function delta(d, year, previousYear) {
-  let yearVal = parseFloat(d[year])
-  let prevYearVal = parseFloat(d[previousYear]);
-  return yearVal - prevYearVal;
-}
-
-function getStyle(d, year, previousYear) {
-  if (delta(d, year, previousYear) > 0) {
-    return "positive";
-  }
-
-  return "negative"
-}
 
 export function CreateGPITrendByRegionBarchart(year, rootElement, dataFile, key) {
   console.log(`Generating barchart for year ${year}`);
@@ -42,16 +29,16 @@ export function CreateGPITrendByRegionBarchart(year, rootElement, dataFile, key)
   d3.csv(dataFile).then(function(data) {
     let previousYear = (parseInt(year) - 1).toString();
     xScale.domain(d3.extent(
-      data, function(d) { return delta(d, year, previousYear)})).nice();
+      data, function(d) { return GetDelta(d, year, previousYear)})).nice();
 
     svg.selectAll("rect")
       .data(data)
       .enter()
       .append("rect")
-      .attr("class", function(d) {return getStyle(d, year, previousYear)})
-      .attr("x", function(d) { return xScale(Math.min(0, delta(d, year, previousYear))); })
+      .attr("class", function(d) {return GetStyle(d, year, previousYear)})
+      .attr("x", function(d) { return xScale(Math.min(0, GetDelta(d, year, previousYear))); })
       .attr("y", function(d) { return yScale(d[key]); })
-      .attr("width", function(d) { return Math.abs(xScale(delta(d, year, previousYear)) - xScale(0)); })
+      .attr("width", function(d) { return Math.abs(xScale(GetDelta(d, year, previousYear)) - xScale(0)); })
       .attr("height", yScale.bandwidth())
       .on("mouseover", function(d) {
         console.log("mouseover event with data:", d3.select(this).data());
@@ -84,8 +71,8 @@ export function CreateGPITrendByRegionBarchart(year, rootElement, dataFile, key)
 }
 
 export function UpdateGPITrendBarchart(year) {
-  let xScale = getXScale();
-  let yScale = getYScale();
+  let xScale = GetXScale("#trend", margin.left, margin.right);
+  let yScale = GetYScale("#trend", yDomain, margin.top, margin.bottom);
   let xAxis = d3.axisBottom(xScale);
   let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
   let svg = d3.select("#trend");
@@ -93,14 +80,14 @@ export function UpdateGPITrendBarchart(year) {
   d3.csv("data/gpi-by-region.csv").then(function(data) {
     let previousYear = (parseInt(year) - 1).toString();
     xScale.domain(d3.extent(
-      data, function(d) { return delta(d, year, previousYear)})).nice();
+      data, function(d) { return GetDelta(d, year, previousYear)})).nice();
 
     svg.selectAll("rect")
       .data(data)
       .transition()
-      .attr("class", function(d) {return getStyle(d, year, previousYear)})
-      .attr("x", function(d) { return xScale(Math.min(0, delta(d, year, previousYear))); })
-      .attr("width", function(d) { return Math.abs(xScale(delta(d, year, previousYear)) - xScale(0)); })
+      .attr("class", function(d) {return GetStyle(d, year, previousYear)})
+      .attr("x", function(d) { return xScale(Math.min(0, GetDelta(d, year, previousYear))); })
+      .attr("width", function(d) { return Math.abs(xScale(GetDelta(d, year, previousYear)) - xScale(0)); })
 
     svg.select(".axis-x")
       .attr("transform", "translate(0," + (yScale.range()[1]) + ")")
