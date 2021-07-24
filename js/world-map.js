@@ -10,19 +10,19 @@ const color = d3.scaleQuantize()
 
 let projection = d3.geoMercator()
 let path = d3.geoPath().projection(projection);
-let svgWorldMap = d3.select("#map");
-const width = parseInt(svgWorldMap.style("width").replace("px", ""));
-const height = parseInt(svgWorldMap.style("height").replace("px", ""));
+let svg = d3.select("#map");
+const width = parseInt(svg.style("width").replace("px", ""));
+const height = parseInt(svg.style("height").replace("px", ""));
 
 let zooming = function (event, _) {
   let offset = [event.transform.x, event.transform.y];
   let newScale = event.transform.k * 2000;
   projection.translate(offset).scale(newScale);
-  svgWorldMap.selectAll("path").attr("d", path);
+  svg.selectAll("path").attr("d", path);
 }
 let zoom = d3.zoom().scaleExtent([0.05, 2.0]).on("zoom", zooming);
 
-svgWorldMap
+svg
   .call(zoom)
   .call(zoom.transform, d3.zoomIdentity
   .translate(width/2, height/1.5)
@@ -53,7 +53,7 @@ export function drawGlobalPeaceIndexMap(year) {
         }
       }
 
-      svgWorldMap.selectAll("path")
+      svg.selectAll("path")
         .data(geojson.features)
         .enter()
         .append("path")
@@ -169,7 +169,7 @@ export function drawLegend() {
 export function drawZoomButtons() {
   const heightOffset = 30;
   const withOffset = 70;
-  let zoomIn = svgWorldMap.append("g")
+  let zoomIn = svg.append("g")
     .attr("class", "zoom")
     .attr("id", "in")
     .attr("transform", "translate(" + (width - 110) + "," + (height - heightOffset) + ")");
@@ -185,7 +185,7 @@ export function drawZoomButtons() {
     .attr("y", 20)
     .text("+");
 
-  let zoomOut = svgWorldMap.append("g")
+  let zoomOut = svg.append("g")
     .attr("class", "zoom")
     .attr("id", "out")
     .attr("transform", "translate(" + (width - 70) + "," + (height - heightOffset) + ")");
@@ -217,7 +217,7 @@ export function drawZoomButtons() {
           break;
       }
 
-      svgWorldMap.transition()
+      svg.transition()
         .call(zoom.scaleBy, scaleFactor);
     });
 
@@ -227,7 +227,7 @@ d3.select("#year")
   .on("change", function(e) {
     console.log("Year selection changed", e);
     let year = eval(d3.select(this).property('value'));
-    svgWorldMap.selectAll("path").remove();
+    svg.selectAll("path").remove();
     drawGlobalPeaceIndexMap(year);
 })
 
