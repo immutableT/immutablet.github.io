@@ -1,13 +1,13 @@
-export function drawGlobalPeaceIndexTrendBarchart(year) {
-  console.log(`Generating barchart for year ${year}`);
+const margin = {top: 20, right: 30, bottom: 40, left: 30};
 
-  const margin = {top: 20, right: 30, bottom: 40, left: 30};
-  // TODO: Initializing svg here breaks padding for some reason;
+function getXScale() {
   const width = parseInt(d3.select("#trend").style("width").replace("px", ""));
-  const height = parseInt(d3.select("#trend").style("height").replace("px", ""));;
+  return d3.scaleLinear().range([0, width - margin.left - margin.right]);
+}
 
-  let xScale = d3.scaleLinear().range([0, width - margin.left - margin.right]);
-  let yScale = d3.scaleBand().domain([
+function getYScale() {
+  const height = parseInt(d3.select("#trend").style("height").replace("px", ""));
+  return d3.scaleBand().domain([
     "Africa",
     "South/Latin America",
     "Europe",
@@ -17,6 +17,12 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
     "Asia & Pacific",
   ]).rangeRound([0, height - margin.top - margin.bottom])
     .paddingInner(0.05);
+}
+
+export function drawGlobalPeaceIndexTrendBarchart(year) {
+  console.log(`Generating barchart for year ${year}`);
+  let xScale = getXScale();
+  let yScale = getYScale();
 
   let xAxis = d3.axisBottom(xScale);
   let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
@@ -74,7 +80,7 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
 
     svg.append("g")
       .attr("class", "axis-x")
-      .attr("transform", "translate(0," + (height - margin.top - margin.bottom) + ")")
+      .attr("transform", "translate(0," + (yScale.range()[1]) + ")")
       .call(xAxis);
 
     svg.append("g")
