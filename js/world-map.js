@@ -46,7 +46,7 @@ function attachScore(data, year, geojson) {
   }
 }
 
-export function drawGlobalPeaceIndexMap(year) {
+export function CreateGPIMap(year) {
   console.log(`Generating map for year ${year}`)
   d3.csv("data/overall.csv").then(function(data) {
     let min = d3.min(data, function(d) { return d[year]; });
