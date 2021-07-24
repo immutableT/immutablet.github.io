@@ -2,6 +2,8 @@ import { GetYScale } from "./barchart.js";
 import { GetXScale } from "./barchart.js";
 import { GetDelta } from "./barchart.js";
 import { GetStyle } from "./barchart.js";
+import { GetX } from "./barchart.js";
+import { GetWidth } from "./barchart.js";
 
 const margin = {top: 20, right: 30, bottom: 40, left: 30};
 const yDomain = [
@@ -36,9 +38,9 @@ export function CreateGPITrendByRegionBarchart(year, rootElement, dataFile, key)
       .enter()
       .append("rect")
       .attr("class", function(d) {return GetStyle(d, year, previousYear)})
-      .attr("x", function(d) { return xScale(Math.min(0, GetDelta(d, year, previousYear))); })
+      .attr("x", function(d) { return GetX(xScale, d, year, previousYear);})
       .attr("y", function(d) { return yScale(d[key]); })
-      .attr("width", function(d) { return Math.abs(xScale(GetDelta(d, year, previousYear)) - xScale(0)); })
+      .attr("width", function(d) { return GetWidth(xScale, d, year, previousYear);})
       .attr("height", yScale.bandwidth())
       .on("mouseover", function(d) {
         console.log("mouseover event with data:", d3.select(this).data());

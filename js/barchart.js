@@ -9,6 +9,14 @@ export function GetYScale(containerID, domain, martinTop, marginBottom) {
     .paddingInner(0.05);
 }
 
+export function GetX(xScale, d, year, previousYear) {
+  return xScale(Math.min(0, GetDelta(d, year, previousYear)));
+}
+
+export function GetWidth(xScale, d, year, previousYear) {
+  return Math.abs(xScale(GetDelta(d, year, previousYear)) - xScale(0));
+}
+
 export function GetDelta(d, year, previousYear) {
   let yearVal = parseFloat(d[year])
   let prevYearVal = parseFloat(d[previousYear]);
