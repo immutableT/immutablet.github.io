@@ -46,12 +46,16 @@ function attachScore(data, year, geojson) {
   }
 }
 
+function setColorDomain(data, year) {
+  let min = d3.min(data, function(d) { return d[year]; });
+  let max = d3.max(data, function(d) { return d[year]; });
+  color.domain([min, max]);
+}
+
 export function CreateGPIMap(year) {
   console.log(`Generating map for year ${year}`)
   d3.csv("data/overall.csv").then(function(data) {
-    let min = d3.min(data, function(d) { return d[year]; });
-    let max = d3.max(data, function(d) { return d[year]; });
-    color.domain([min, max]);
+    setColorDomain(data, year)
 
     d3.json("data/world.geo.json").then(function(geojson) {
       attachScore(data, year, geojson);
