@@ -25,7 +25,11 @@
     CreateGPIMap('2021');
     drawLegend('2021');
     drawZoomButtons();
-    CreateGPITrendBarchart('2021');
+    CreateGPITrendBarchart(
+      '2021',
+      '#trend',
+      "data/gpi-by-region.csv",
+      "Region");
 
     const barchartLegend = '<br/><span id="less-peaceful">less peaceful/</span><span id="more-peaceful">more peaceful</span>'
     d3.select("#trend-header").html(`Change in score from 2020 to 2021 ${barchartLegend}`);
