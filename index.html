@@ -19,13 +19,13 @@
     import {UpdateGPIMap} from "./js/world-map.js";
     import {drawLegend} from "./js/world-map.js";
     import {drawZoomButtons} from "./js/world-map.js";
-    import {CreateGPITrendBarchart} from "./js/trend.js";
+    import {CreateGPITrendByRegionBarchart} from "./js/trend.js";
     import {UpdateGPITrendBarchart} from "./js/trend.js";
 
     CreateGPIMap('2021');
     drawLegend('2021');
     drawZoomButtons();
-    CreateGPITrendBarchart(
+    CreateGPITrendByRegionBarchart(
       '2021',
       '#trend',
       "data/gpi-by-region.csv",

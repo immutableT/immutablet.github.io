@@ -33,7 +33,7 @@ function getStyle(d, year, previousYear) {
   return "negative"
 }
 
-export function CreateGPITrendBarchart(year, rootElement, dataFile, key) {
+export function CreateGPITrendByRegionBarchart(year, rootElement, dataFile, key) {
   console.log(`Generating barchart for year ${year}`);
   let xScale = getXScale();
   let yScale = getYScale();
