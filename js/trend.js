@@ -88,3 +88,32 @@ export function CreateGPITrendBarchart(year) {
       .call(yAxis);
   });
 }
+
+export function UpdateGPITrendBarchart(year) {
+  let xScale = getXScale();
+  let yScale = getYScale();
+  let xAxis = d3.axisBottom(xScale);
+  let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
+  let svg = d3.select("#trend");
+
+  d3.csv("data/gpi-by-region.csv").then(function(data) {
+    let previousYear = (parseInt(year) - 1).toString();
+    xScale.domain(d3.extent(
+      data, function(d) { return delta(d, year, previousYear)})).nice();
+
+    svg.selectAll("rect")
+      .data(data)
+      .attr("class", function(d) {return getStyle(d, year, previousYear)})
+      .attr("x", function(d) { return xScale(Math.min(0, delta(d, year, previousYear))); })
+      .attr("width", function(d) { return Math.abs(xScale(delta(d, year, previousYear)) - xScale(0)); })
+
+    svg.select(".axis-x")
+      .attr("transform", "translate(0," + (yScale.range()[1]) + ")")
+      .call(xAxis);
+
+    svg.select(".axis-y")
+      .attr("transform", "translate(" + xScale(0) + ",0)")
+      .call(yAxis);
+  });
+}
+
