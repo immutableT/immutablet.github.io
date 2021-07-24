@@ -37,7 +37,6 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
   console.log(`Generating barchart for year ${year}`);
   let xScale = getXScale();
   let yScale = getYScale();
-
   let xAxis = d3.axisBottom(xScale);
   let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
 
@@ -48,7 +47,8 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
 
   d3.csv("data/gpi-by-region.csv").then(function(data) {
     let previousYear = (parseInt(year) - 1).toString();
-    xScale.domain(d3.extent(data, function(d) { return delta(d, year, previousYear)})).nice();
+    xScale.domain(d3.extent(
+      data, function(d) { return delta(d, year, previousYear)})).nice();
 
     svg.selectAll("rect")
       .data(data)
