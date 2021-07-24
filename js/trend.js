@@ -15,7 +15,8 @@ export function drawGlobalPeaceIndexTrendBarchart(year) {
     "Middle East",
     "North America",
     "Asia & Pacific",
-  ]).range([0, height - margin.top - margin.bottom]);
+  ]).rangeRound([0, height - margin.top - margin.bottom])
+    .paddingInner(0.05);
 
   let xAxis = d3.axisBottom(xScale);
   let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
