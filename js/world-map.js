@@ -64,17 +64,47 @@ function setFill(data) {
 }
 
 function attachTooltip(d) {
-  let country = d3.select(this).data()[0].properties.name
-  let score = d3.select(this).data()[0].properties.value
-  if (!score) {
-    score = "data not available"
-  }
-  tooltip.transition()
-    .duration(200)
-    .style("opacity", .9);
-  tooltip.html(country + "<br/>" + score)
+  tooltip
     .style('left', d.clientX + 'px')
     .style('top', d.clientY + 'px')
+
+  let country = d3.select(this).data()[0].properties.name
+  let msg = `${country}: `
+  let score = d3.select(this).data()[0].properties.value
+  if (!score) {
+    msg = `${msg}: data unavailable`
+    tooltip.transition()
+      .duration(200)
+      .style("opacity", .9);
+    tooltip.html(msg)
+    return;
+  }
+
+  msg = `${msg}${score}`
+
+  let year = eval(d3.select("#year").property('value'));
+  let previousYear = (parseInt(year) - 1).toString();
+  console.log(`Getting delta for country: ${country}, year: ${year} previousYear: ${previousYear}`);
+
+  d3.csv('./data/overall.csv').then(function (data) {
+    data = data.filter(function (row) {
+      return row['Country'] === country;
+    });
+    let delta = (parseFloat(data[0][year]) - parseFloat(data[0][previousYear])).toPrecision(1);
+    msg = `${msg}<br/>Change from ${previousYear}: `
+    if (delta > 0) {
+      msg = `${msg}<span class="more-peaceful">+${delta}</span>`
+    } else {
+      msg = `${msg}<span class="less-peaceful">${delta}</span>`
+    }
+
+    tooltip.transition()
+      .duration(200)
+      .style("opacity", .9);
+    tooltip.html(msg)
+      .style('left', d.clientX + 'px')
+      .style('top', d.clientY + 'px')
+  })
 }
 
 export function CreateGPIMap(year) {
@@ -114,7 +144,6 @@ export function UpdateGPIMap(year) {
     });
   });
 }
-
 
 export function drawLegend() {
   let svg = d3.select("#map-legend");

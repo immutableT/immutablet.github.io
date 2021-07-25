@@ -20,8 +20,8 @@
 div.tooltip-map {
   position: absolute;
   text-align: center;
-  width: 150px;
-  height: 60px;
+  width: 250px;
+  height: 40px;
   padding-top: 10px;
   font: 14px sans-serif;
   background: lightsteelblue;
@@ -67,12 +67,14 @@ div.tooltip-barchart {
   font-size: 12px;
 }
 
-#less-peaceful {
+.less-peaceful {
   color: rgb(196,58,31);
+  font-weight: bold;
 }
 
-#more-peaceful {
+.more-peaceful {
   color: rgb(14,63,153);
+  font-weight: bold;
 }
 
 .zoom rect {
