@@ -16,12 +16,8 @@ export function CreateGPITrendByRegionBarchart(year, rootElement, dataFile, key)
 
   d3.csv(dataFile).then(function(data) {
     let barchart = new Barchart(rootElement, margin.left, margin.right, margin.top, margin.bottom, yDomain, year, data);
-    let svg = d3.select(rootElement)
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     let tooltip = d3.select("#tooltip-barchart");
-
-    svg.selectAll("rect")
+    barchart.SVG.selectAll("rect")
       .data(data)
       .enter()
       .append("rect")
@@ -48,12 +44,12 @@ export function CreateGPITrendByRegionBarchart(year, rootElement, dataFile, key)
           .style("opacity", 0);
       });
 
-    svg.append("g")
+    barchart.SVG.append("g")
       .attr("class", "axis-x")
       .attr("transform", barchart.XAxisTranslation)
       .call(barchart.XAxis);
 
-    svg.append("g")
+    barchart.SVG.append("g")
       .attr("class", "axis-y")
       .attr("transform", barchart.YAxisTranslation)
       .call(barchart.YAxis);

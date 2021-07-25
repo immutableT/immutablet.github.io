@@ -14,6 +14,7 @@ export class Barchart {
   #previousYear;
   #data;
   #domain;
+  #svg;
 
   constructor(containerID, marginLeft, marginRight, marginTop, marginBottom, domain, year, data) {
     this.#containerID = containerID;
@@ -27,6 +28,10 @@ export class Barchart {
     this.#width = parseInt(d3.select(containerID).style("width").replace("px", ""));
     this.#height = parseInt(d3.select(containerID).style("height").replace("px", ""));
     this.#data = data;
+
+    this.#svg = d3.select(containerID)
+      .append("g")
+      .attr("transform", "translate(" + marginLeft + "," + marginTop + ")");
 
     this.#xScale = d3.scaleLinear().range([0, this.#width - marginLeft - marginRight]);
     this.#yScale = d3.scaleBand()
@@ -44,6 +49,10 @@ export class Barchart {
         return yearVal - prevYearVal;
       })).nice();
 
+  }
+
+  get SVG() {
+    return this.#svg;
   }
 
   get XAxis() {
@@ -84,6 +93,14 @@ export class Barchart {
     let delta = this.#getDelta(d);
     let scale = this.#xScale(delta);
     return Math.abs(scale - this.#xScale(0));
+  }
+
+  #getStyle(d) {
+    if (this.#getDelta(d) > 0) {
+      return "positive";
+    }
+
+    return "negative"
   }
 
   GetStyle(d) {
