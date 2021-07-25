@@ -1,9 +1,4 @@
-import { GetYScale } from "./barchart.js";
-import { GetXScale } from "./barchart.js";
-import { GetDelta } from "./barchart.js";
-import { GetStyle } from "./barchart.js";
-import { GetX } from "./barchart.js";
-import { GetWidth } from "./barchart.js";
+import { Barchart} from "./barchart.js";
 
 const margin = {top: 20, right: 30, bottom: 40, left: 30};
 const yDomain = [
@@ -18,30 +13,23 @@ const yDomain = [
 
 export function CreateGPITrendByRegionBarchart(year, rootElement, dataFile, key) {
   console.log(`Generating barchart for year ${year}`);
-  let xScale = GetXScale(rootElement, margin.left, margin.right);
-  let yScale = GetYScale(rootElement, yDomain, margin.top, margin.bottom);
-  let xAxis = d3.axisBottom(xScale);
-  let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
-
-  let svg = d3.select(rootElement)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-  let tooltip = d3.select("#tooltip-barchart");
 
   d3.csv(dataFile).then(function(data) {
-    let previousYear = (parseInt(year) - 1).toString();
-    xScale.domain(d3.extent(
-      data, function(d) { return GetDelta(d, year, previousYear)})).nice();
+    let barchart = new Barchart(rootElement, margin.left, margin.right, margin.top, margin.bottom, yDomain, year, data);
+    let svg = d3.select(rootElement)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    let tooltip = d3.select("#tooltip-barchart");
 
     svg.selectAll("rect")
       .data(data)
       .enter()
       .append("rect")
-      .attr("class", function(d) {return GetStyle(d, year, previousYear)})
-      .attr("x", function(d) { return GetX(xScale, d, year, previousYear);})
-      .attr("y", function(d) { return yScale(d[key]); })
-      .attr("width", function(d) { return GetWidth(xScale, d, year, previousYear);})
-      .attr("height", yScale.bandwidth())
+      .attr("class", function(d) {return barchart.GetStyle(d)})
+      .attr("x", function(d) { return barchart.GetBarX(d);})
+      .attr("y", function(d) { return barchart.YScale(d[key]); })
+      .attr("width", function(d) { return barchart.GetBarWidth(d);})
+      .attr("height", barchart.YScale.bandwidth())
       .on("mouseover", function(d) {
         console.log("mouseover event with data:", d3.select(this).data());
         let bar = d3.select(this)
@@ -62,42 +50,36 @@ export function CreateGPITrendByRegionBarchart(year, rootElement, dataFile, key)
 
     svg.append("g")
       .attr("class", "axis-x")
-      .attr("transform", "translate(0," + (yScale.range()[1]) + ")")
-      .call(xAxis);
+      .attr("transform", barchart.XAxisTranslation)
+      .call(barchart.XAxis);
 
     svg.append("g")
       .attr("class", "axis-y")
-      .attr("transform", "translate(" + xScale(0) + ",0)")
-      .call(yAxis);
+      .attr("transform", barchart.YAxisTranslation)
+      .call(barchart.YAxis);
   });
 }
 
 export function UpdateGPITrendBarchart(year) {
-  let xScale = GetXScale("#trend", margin.left, margin.right);
-  let yScale = GetYScale("#trend", yDomain, margin.top, margin.bottom);
-  let xAxis = d3.axisBottom(xScale);
-  let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
-  let svg = d3.select("#trend");
-
   d3.csv("data/gpi-by-region.csv").then(function(data) {
+    let barchart = new Barchart("#trend", margin.left, margin.right, margin.top, margin.bottom, yDomain, year, data);
+    let svg = d3.select("#trend");
     let previousYear = (parseInt(year) - 1).toString();
-    xScale.domain(d3.extent(
-      data, function(d) { return GetDelta(d, year, previousYear)})).nice();
 
     svg.selectAll("rect")
       .data(data)
       .transition()
-      .attr("class", function(d) {return GetStyle(d, year, previousYear)})
-      .attr("x", function(d) { return xScale(Math.min(0, GetDelta(d, year, previousYear))); })
-      .attr("width", function(d) { return Math.abs(xScale(GetDelta(d, year, previousYear)) - xScale(0)); })
+      .attr("class", function(d) {return barchart.GetStyle(d)})
+      .attr("x", function(d) { return barchart.GetBarX(d);})
+      .attr("width", function(d) { return barchart.GetBarWidth(d);})
 
     svg.select(".axis-x")
-      .attr("transform", "translate(0," + (yScale.range()[1]) + ")")
-      .call(xAxis);
+      .attr("transform", "translate(0," + (barchart.YScale.range()[1]) + ")")
+      .call(barchart.XAxis);
 
     svg.select(".axis-y")
-      .attr("transform", "translate(" + xScale(0) + ",0)")
-      .call(yAxis);
+      .attr("transform", "translate(" + barchart.XScale(0) + ",0)")
+      .call(barchart.YAxis);
   });
 }
 
