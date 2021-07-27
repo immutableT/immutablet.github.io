@@ -2,7 +2,7 @@ const margin = {top: 20, right: 30, bottom: 40, left: 30};
 
 export function CreateGPI2WBIScatterPlot(year) {
   var w = 800;
-  var h = 600;
+  var h = 400;
 
   let gpiKey = `gpi-${year}`;
   let wbiKey = `wbi-${year}`;
@@ -21,7 +21,8 @@ export function CreateGPI2WBIScatterPlot(year) {
       })])
       .range([0, h]);
 
-    console.log(`${yScale.domain()}`)
+    console.log(`xScale: ${xScale.domain()}`);
+    console.log(`yScale: ${yScale.domain()}`);
 
     let svg = d3.select("#scatter-plot")
       .attr("width", w)
