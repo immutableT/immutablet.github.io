@@ -1,54 +1,54 @@
 const margin = {top: 20, right: 30, bottom: 40, left: 30};
 
 export function CreateGPI2WBIScatterPlot(year) {
-  var w = 800;
-  var h = 400;
+  const w = 960 - margin.left - margin.right;
+  const h = 500 - margin.top - margin.bottom;
 
-  let gpiKey = `gpi-${year}`;
-  let wbiKey = `wbi-${year}`;
+  let xKey = `gpi-${year}`;
+  let yKey = `wbi-${year}`;
+
+  let getX = function(d) {
+    return parseFloat(d[xKey]);
+  }
+  let getY = function(d) {
+    return parseInt(d[yKey]);
+  }
 
   d3.csv('./data/gpi-wbi.csv').then(function(data) {
-
     let xScale = d3.scaleLinear()
       .domain([0, d3.max(data, function (d) {
-        return parseFloat(d[gpiKey]);
+        return getX(d);
       })])
       .range([0, w]);
 
     let yScale = d3.scaleLinear()
       .domain([0, d3.max(data, function (d) {
-        return parseInt(d[wbiKey]);
+        return getY(d);
       })])
-      .range([0, h]);
+      .range([h, 0]);
 
     console.log(`xScale: ${xScale.domain()}`);
     console.log(`yScale: ${yScale.domain()}`);
 
     let svg = d3.select("#scatter-plot")
-      .attr("width", w)
-      .attr("height", h)
+      .attr("width", w + margin.left + margin.right)
+      .attr("height", h + margin.top + margin.bottom)
+      .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     svg.selectAll("circle")
       .data(data)
       .enter()
-      .filter(function(d) { return !isNaN(parseInt(d[wbiKey]))})
+      .filter(function(d) { return !isNaN(getY(d))})
       .append("circle")
       .attr("cx", function (d) {
-        return xScale(parseFloat(d[gpiKey]));
+        return xScale(getX(d));
       })
       .attr("cy", function (d) {
-        let cy = parseInt(d[wbiKey]);
-        console.log(`cy: ${yScale(cy)}`)
-        return yScale(cy);
-        // console.log(`cy: ${cy}`)
-        // if (isNaN(cy)) {
-        //   return 0;
-        // }
-        // return cy;
+        return yScale(getY(d));
       })
       .attr("r", function (d) {
-        return 5;
+        return 2;
       });
   });
 }
