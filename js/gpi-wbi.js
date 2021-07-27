@@ -1,4 +1,12 @@
 const margin = {top: 20, right: 30, bottom: 40, left: 30};
+const color = d3.scaleQuantize()
+  .range([
+    "rgb(14,63,153)",
+    "rgb(73,93,154)",
+    "rgb(155,163,193)",
+    "rgb(206,136,125)",
+    "rgb(196,58,31)"]
+  );
 
 export function CreateGPI2WBIScatterPlot(year) {
   const w = 960 - margin.left - margin.right;
@@ -27,6 +35,11 @@ export function CreateGPI2WBIScatterPlot(year) {
       })])
       .range([h, 0]);
 
+    color.domain([
+      d3.min(data, function(d) { return d[xKey]; }),
+      d3.max(data, function(d) { return d[xKey]; })
+    ])
+
     console.log(`xScale: ${xScale.domain()}`);
     console.log(`yScale: ${yScale.domain()}`);
 
@@ -47,6 +60,7 @@ export function CreateGPI2WBIScatterPlot(year) {
       .attr("cy", function (d) {
         return yScale(getY(d));
       })
+      .attr("fill", function(d) {return color(getX(d));})
       .attr("r", function (d) {
         return 2;
       });
