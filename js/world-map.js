@@ -1,4 +1,3 @@
-//import * as d3 from "./d3.min.js";
 const color = d3.scaleQuantize()
   .range([
     "rgb(14,63,153)",
