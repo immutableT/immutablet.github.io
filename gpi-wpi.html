@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script type="text/javascript" src="js/d3.min.js"></script>
 
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/scatter-plot.css">
 
 </head>
 
@@ -15,17 +15,19 @@
 
   <script type="module">
     import {CreateGPI2WBIScatterPlot} from "./js/gpi-wbi.js";
-    import {CreateLegend} from "./js/color-legend.js";
 
     CreateGPI2WBIScatterPlot('2019');
-    CreateLegend('#scatter-plot-legend', false);
   </script>
 
   <h1 style="margin-left: 30%">Being peaceful is good for the economy!</h1>
-  <div style="display:flex">
-    <svg id="scatter-plot-legend" style="width: 15%"></svg>
-    <svg id="scatter-plot" style="flex-grow: 1"></svg>
+  <div style="margin-left: 30%">
+    <svg id="scatter-plot"></svg>
   </div>
+
+  <div style="margin-left: 43%">
+    <span class="more-peaceful">&larr;&#160;more peaceful &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span><span class="less-peaceful">less peaceful&#160;&rarr;</span>
+  </div>
+
 
 
 </body>

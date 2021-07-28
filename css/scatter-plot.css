@@ -1,0 +1,20 @@
+.axis-x  {
+  font-family: sans-serif;
+}
+
+.axis-y {
+  font-family: sans-serif;
+  font-size: 12px;
+}
+
+.less-peaceful {
+  color: rgb(196,58,31);
+  font-weight: bold;
+  font-size: larger;
+}
+
+.more-peaceful {
+  color: rgb(14,63,153);
+  font-weight: bold;
+  font-size: larger;
+}

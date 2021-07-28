@@ -65,7 +65,7 @@ export function CreateGPI2WBIScatterPlot(year) {
       })
       .attr("fill", function(d) {return color(getX(d));})
       .attr("r", function (d) {
-        return 5;
+        return 4;
       });
 
     svg.append("g")
@@ -78,5 +78,4 @@ export function CreateGPI2WBIScatterPlot(year) {
       .call(yAxis);
   });
 }
-
 
