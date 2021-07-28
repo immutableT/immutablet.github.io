@@ -65,7 +65,7 @@ export function CreateGPI2WBIScatterPlot(year) {
       })
       .attr("fill", function(d) {return color(getX(d));})
       .attr("r", function (d) {
-        return 3;
+        return 5;
       });
 
     svg.append("g")

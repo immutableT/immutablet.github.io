@@ -1,13 +1,33 @@
-export function CreateLegend(containerID) {
+let colorLegend = [
+  "rgb(14,63,153)",
+  "rgb(73,93,154)",
+  "rgb(155,163,193)",
+  "rgb(206,136,125)",
+  "rgb(196,58,31)"
+]
+
+
+export function CreateLegend(containerID, showDataNotAvail) {
   let svg = d3.select(containerID);
   let x = 50;
   let r = 6;
+  let fontSize = "17px"
 
-  svg.append("circle")
-    .attr("cx", x)
-    .attr("cy",100)
-    .attr("r", r)
-    .style("fill", "#CCC")
+  if (showDataNotAvail) {
+    svg.append("circle")
+      .attr("cx", x)
+      .attr("cy",100)
+      .attr("r", r)
+      .style("fill", "#CCC")
+
+    svg.append("text")
+      .attr("x", x + 20)
+      .attr("y", 100)
+      .html("Data not available")
+      .style("font-size", fontSize)
+      .attr("alignment-baseline","middle")
+  }
+
   svg.append("circle")
     .attr("cx", x)
     .attr("cy",130)
@@ -34,13 +54,6 @@ export function CreateLegend(containerID) {
     .attr("r", r)
     .style("fill", "#C43A1FFF")
 
-  let fontSize = "17px"
-  svg.append("text")
-    .attr("x", x + 20)
-    .attr("y", 100)
-    .html("Data not available")
-    .style("font-size", fontSize)
-    .attr("alignment-baseline","middle")
   svg.append("text")
     .attr("x", x + 20)
     .attr("y", 130)

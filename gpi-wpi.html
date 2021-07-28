@@ -15,11 +15,18 @@
 
   <script type="module">
     import {CreateGPI2WBIScatterPlot} from "./js/gpi-wbi.js";
+    import {CreateLegend} from "./js/color-legend.js";
+
     CreateGPI2WBIScatterPlot('2019');
+    CreateLegend('#scatter-plot-legend', false);
   </script>
 
   <h1 style="margin-left: 30%">Being peaceful is good for the economy!</h1>
-  <svg id="scatter-plot" style="margin-left: 20%; margin-top: 70px"></svg>
+  <div style="display:flex">
+    <svg id="scatter-plot-legend" style="width: 15%"></svg>
+    <svg id="scatter-plot" style="flex-grow: 1"></svg>
+  </div>
+
 
 </body>
 
