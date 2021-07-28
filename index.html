@@ -17,13 +17,13 @@
   <script type="module">
     import {CreateGPIMap} from "./js/world-map.js";
     import {UpdateGPIMap} from "./js/world-map.js";
-    import {drawLegend} from "./js/world-map.js";
+    import {CreateLegend} from "./js/color-legend.js";
     import {drawZoomButtons} from "./js/world-map.js";
     import {CreateGPITrendByRegionBarchart} from "./js/trend-by-region.js";
     import {UpdateGPITrendBarchart} from "./js/trend-by-region.js";
 
     CreateGPIMap('2021');
-    drawLegend('2021');
+    CreateLegend('#map-legend');
     drawZoomButtons();
     CreateGPITrendByRegionBarchart(
       '2021',
