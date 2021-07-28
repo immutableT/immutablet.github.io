@@ -1,4 +1,4 @@
-const margin = {top: 20, right: 30, bottom: 40, left: 30};
+const margin = {top: 20, right: 30, bottom: 40, left: 60};
 const color = d3.scaleQuantize()
   .range([
     "rgb(14,63,153)",
@@ -24,7 +24,7 @@ export function CreateGPI2WBIScatterPlot(year) {
 
   d3.csv('./data/gpi-wbi.csv').then(function(data) {
     let xScale = d3.scaleLinear()
-      .domain([0, d3.max(data, function (d) {
+      .domain([1, d3.max(data, function (d) {
         return getX(d);
       })])
       .range([0, w]);
@@ -42,6 +42,9 @@ export function CreateGPI2WBIScatterPlot(year) {
 
     console.log(`xScale: ${xScale.domain()}`);
     console.log(`yScale: ${yScale.domain()}`);
+
+    let xAxis = d3.axisBottom(xScale);
+    let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
 
     let svg = d3.select("#scatter-plot")
       .attr("width", w + margin.left + margin.right)
@@ -62,8 +65,17 @@ export function CreateGPI2WBIScatterPlot(year) {
       })
       .attr("fill", function(d) {return color(getX(d));})
       .attr("r", function (d) {
-        return 2;
+        return 3;
       });
+
+    svg.append("g")
+      .attr("class", "axis-x")
+      .attr("transform","translate(0," + h + ")")
+      .call(xAxis);
+
+    svg.append("g")
+      .attr("class", "axis-y")
+      .call(yAxis);
   });
 }
 
