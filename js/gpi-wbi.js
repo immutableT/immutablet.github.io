@@ -91,12 +91,11 @@ function attachTooltip(d) {
   let tooltip = d3.select("#tooltip-scatter-plot")
     .style('left', d.clientX + 'px')
     .style('top', d.clientY + 'px')
-  console.log(`Attaching tooltip to ${d3.select(this).data()[0].Country}`)
   let record = d3.select(this).data()[0];
   let country = record['Country'];
   let gdp = d3.format("($.2f")(record['wbi-2019']);
   let gpi = d3.format("(1.2f")(record['gpi-2019']);
-  let tip = `${country}</br>GDP Per Capita: ${gdp}</br>Global Peace Indicator: ${gpi}`
+  let tip = `${country}<br>GDP Per Capita: ${gdp}<br>Global Peace Indicator: ${gpi}`
 
   tooltip.transition()
     .duration(200)
