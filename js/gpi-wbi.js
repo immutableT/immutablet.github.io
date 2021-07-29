@@ -45,6 +45,7 @@ export function CreateGPI2WBIScatterPlot(year) {
 
     let xAxis = d3.axisBottom(xScale);
     let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
+    let tooltip = d3.select("#tooltip-scatter-plot")
 
     let svg = d3.select("#scatter-plot")
       .attr("width", w + margin.left + margin.right)
@@ -66,7 +67,13 @@ export function CreateGPI2WBIScatterPlot(year) {
       .attr("fill", function(d) {return color(getX(d));})
       .attr("r", function (d) {
         return 4;
-      });
+      })
+      .on("mouseover", attachTooltip)
+      .on("mouseout", function() {
+        tooltip.transition()
+          .duration(200)
+          .style("opacity", 0);
+      })
 
     svg.append("g")
       .attr("class", "axis-x")
@@ -76,6 +83,27 @@ export function CreateGPI2WBIScatterPlot(year) {
     svg.append("g")
       .attr("class", "axis-y")
       .call(yAxis);
+
   });
 }
+
+function attachTooltip(d) {
+  let tooltip = d3.select("#tooltip-scatter-plot")
+    .style('left', d.clientX + 'px')
+    .style('top', d.clientY + 'px')
+  console.log(`Attaching tooltip to ${d3.select(this).data()[0].Country}`)
+  let record = d3.select(this).data()[0];
+  let country = record['Country'];
+  let gdp = d3.format("($.2f")(record['wbi-2019']);
+  let gpi = d3.format("(1.2f")(record['gpi-2019']);
+  let tip = `${country}</br>GDP Per Capita: ${gdp}</br>Global Peace Indicator: ${gpi}`
+
+  tooltip.transition()
+    .duration(200)
+    .style("opacity", .9);
+  tooltip.html(tip)
+    .style('left', d.clientX + 'px')
+    .style('top', d.clientY + 'px')
+}
+
 
