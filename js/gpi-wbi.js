@@ -40,8 +40,8 @@ export function CreateGPI2WBIScatterPlot(year) {
       d3.max(data, function(d) { return d[xKey]; })
     ])
 
-    console.log(`xScale: ${xScale.domain()}`);
-    console.log(`yScale: ${yScale.domain()}`);
+    // console.log(`xScale: ${xScale.domain()}`);
+    // console.log(`yScale: ${yScale.domain()}`);
 
     let xAxis = d3.axisBottom(xScale);
     let yAxis = d3.axisLeft(yScale).tickSize(0).tickPadding(6);
