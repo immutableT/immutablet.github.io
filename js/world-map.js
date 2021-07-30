@@ -7,26 +7,8 @@ const color = d3.scaleQuantize()
     "rgb(196,58,31)"]
   );
 
-let projection = d3.geoMercator()
+let projection = d3.geoMercator();
 let path = d3.geoPath().projection(projection);
-let svg = d3.select("#map");
-const width = parseInt(svg.style("width").replace("px", ""));
-const height = parseInt(svg.style("height").replace("px", ""));
-
-let zooming = function (event, _) {
-  let offset = [event.transform.x, event.transform.y];
-  let newScale = event.transform.k * 2000;
-  projection.translate(offset).scale(newScale);
-  svg.selectAll("path").attr("d", path);
-}
-let zoom = d3.zoom().scaleExtent([0.05, 2.0]).on("zoom", zooming);
-
-svg
-  .call(zoom)
-  .call(zoom.transform, d3.zoomIdentity
-  .translate(width/2, height/1.5)
-  .scale(0.06));
-
 let tooltip = d3.select('#tooltip-map');
 
 function attachScore(data, year, geojson) {
@@ -106,7 +88,28 @@ function attachTooltip(d) {
   })
 }
 
-export function CreateGPIMap(year) {
+function getZoom(svg) {
+  let zooming = function (event, _) {
+    let offset = [event.transform.x, event.transform.y];
+    let newScale = event.transform.k * 2000;
+    projection.translate(offset).scale(newScale);
+    svg.selectAll("path").attr("d", path);
+  }
+  return d3.zoom().scaleExtent([0.05, 2.0]).on("zoom", zooming);
+}
+
+export function CreateGPIMap(container, year) {
+  let svg = d3.select(container);
+  const width = parseInt(svg.style("width").replace("px", ""));
+  const height = parseInt(svg.style("height").replace("px", ""));
+  let zoom = getZoom(svg);
+
+  svg
+    .call(zoom)
+    .call(zoom.transform, d3.zoomIdentity
+      .translate(width/2, height/1.5)
+      .scale(0.06));
+
   console.log(`Generating map for year ${year}`);
   d3.csv("data/overall.csv").then(function(data) {
     setColorDomain(data, year)
@@ -129,7 +132,8 @@ export function CreateGPIMap(year) {
   });
 }
 
-export function UpdateGPIMap(year) {
+export function UpdateGPIMap(container, year) {
+  let svg = d3.select(container);
   console.log(`Generating update for year ${year}`);
   d3.csv("data/overall.csv").then(function(data) {
     setColorDomain(data, year)
@@ -144,7 +148,8 @@ export function UpdateGPIMap(year) {
   });
 }
 
-export function drawZoomButtons() {
+export function CreateZoomButtons(container) {
+  let svg = d3.select(container);
   let zoomIn = d3.select("#zoom-in");
   let zoomOut = d3.select("#zoom-out");
 
@@ -186,6 +191,7 @@ export function drawZoomButtons() {
           break;
       }
 
+      let zoom = getZoom(svg);
       svg.transition()
         .call(zoom.scaleBy, scaleFactor);
     });

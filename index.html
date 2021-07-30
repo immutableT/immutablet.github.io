@@ -14,100 +14,30 @@
 </head>
 
 <body>
-  <script type="module">
-    import {CreateGPIMap} from "./js/world-map.js";
-    import {UpdateGPIMap} from "./js/world-map.js";
-    import {CreateLegend} from "./js/color-legend.js";
-    import {drawZoomButtons} from "./js/world-map.js";
-    import {CreateGPITrendByRegionBarchart} from "./js/trend-by-region.js";
-    import {UpdateGPITrendBarchart} from "./js/trend-by-region.js";
+<script type="module">
+  import {CreateGPIMap} from "./js/world-map.js";
+  import {UpdateGPIMap} from "./js/world-map.js";
+  import {CreateLegend} from "./js/color-legend.js";
+  import {drawZoomButtons} from "./js/world-map.js";
+  import {CreateGPITrendByRegionBarchart} from "./js/trend-by-region.js";
+  import {UpdateGPITrendBarchart} from "./js/trend-by-region.js";
 
-    CreateGPIMap('2021');
-    CreateLegend('#map-legend', true);
-    drawZoomButtons();
-    CreateGPITrendByRegionBarchart(
-      '2021',
-      '#trend',
-      "data/gpi-by-region.csv",
-      "Region");
-
-    const barchartLegend = '<br/><span class="less-peaceful">less peaceful/</span><span class="more-peaceful">more peaceful</span>'
-    d3.select("#trend-header").html(`Change in score from 2020 to 2021 ${barchartLegend}`);
-
-    d3.select("#year")
-      .on("change", function(e) {
-        let year = eval(d3.select(this).property('value'));
-        UpdateGPIMap(year);
-        UpdateGPITrendBarchart(year);
-        let previousYear = (parseInt(year) - 1).toString();
-        d3.select("#trend-header").html(`Change in score from ${previousYear} to ${year}${barchartLegend}`);
-      })
-
-  </script>
-
-  <h1 style="margin-left: 50px">Is the golden age of peace is here to last?</h1>
-  <p style="width: 1200px; margin-left: 50px;">
-    There are often clear signs that a country is sliding into conflict or crisis.
-    The government might muzzle the press or lock up opposition politicians.
-    The currency might go haywire.
-    Perhaps sectarian fighting has broken out.
-    Often, however, the erosion of order is subtler.
-    For example, a new report from the Institute for Economics and Peace (IEP) assesses the stability of 163 countries.
-    It finds that two-thirds of regions became more troubled in the past year (see charts below).
-  </p>
-  <b style="margin-left: 50px; font-size: large">Source: Global Peace Index</b>
-
-  <div class="global-peace-index-map">
-    <svg id="map-legend"></svg>
-    <svg id="map"></svg>
-  </div>
-  <div style="display: flex; width: 3%; height: 40px; margin-left: 1150px; margin-top: 30px">
-    <svg>
-      <g id="zoom-in" class="zoom"></g>
-    </svg>
-    <svg>
-      <g id="zoom-out" class="zoom"></g>
-    </svg>
-  </div>
-
-  <div style="margin-left: 750px; font-size: large">
-    <label for="year" style="font-size: larger"><b>year</b>:</label>
-    <select name="year" id="year">
-      <option value="2021">2021</option>
-      <option value="2020">2020</option>
-      <option value="2019">2019</option>
-      <option value="2018">2018</option>
-      <option value="2017">2017</option>
-      <option value="2016">2016</option>
-      <option value="2015">2015</option>
-      <option value="2014">2014</option>
-      <option value="2013">2013</option>
-      <option value="2012">2012</option>
-    </select>
-  </div>
-
-  <div style="margin-left: 50px">
-    <div style="font-size: 20px">
-      <b id="trend-header"><br/></b>
-    </div>
-    <svg id="trend" class="trend-by-region"></svg>
-    <div>
-      <b style="font-size: large">Source: Global Peace Index</b>
-    </div>
-  </div>
-
-  <p style="width: 1200px; margin-left: 50px;">
-    The report offers two different rankings.
-    The first is a Positive Peace Index (PPI), a composite measure of factors that might be expected to make a country more peaceful.
-    These include a country’s institutions and general socio-economic health.
-    Eight indicators influence the overall score, including levels of corruption, human capital, broad access to public services such as health and education, and a well-functioning government.
-    Countries that perform well on this index are generally less tolerant of violence and offer other means by which to resolve disputes.
-  </p>
+  CreateGPIMap('2021');
 
 
-  <!--  Tooltips-->
-  <div id="tooltip-barchart" class="tooltip-barchart"></div>
-  <div id="tooltip-map" class="tooltip-map"></div>
+</script>
+
+<h1 style="margin-left: 50px">Is the golden age of peace is here to last?</h1>
+
+<b style="margin-left: 50px; font-size: large">Source: Global Peace Index</b>
+
+<div class="global-peace-index-map">
+  <svg id="map-2012"></svg>
+  <svg id="map-2021"></svg>
+</div>
+
+<!--  Tooltips-->
+<div id="tooltip-map" class="tooltip-map"></div>
 
 </body>
 
