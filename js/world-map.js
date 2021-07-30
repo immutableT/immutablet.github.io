@@ -1,12 +1,3 @@
-const color = d3.scaleQuantize()
-  .range([
-    "rgb(14,63,153)",
-    "rgb(73,93,154)",
-    "rgb(155,163,193)",
-    "rgb(206,136,125)",
-    "rgb(196,58,31)"]
-  );
-
 let projection = d3.geoMercator();
 let path = d3.geoPath().projection(projection);
 let tooltip = d3.select('#tooltip-map');
@@ -27,13 +18,13 @@ function attachScore(data, year, geojson) {
   }
 }
 
-function setColorDomain(data, year) {
+function setColorDomain(color, data, year) {
   let min = d3.min(data, function(d) { return d[year]; });
   let max = d3.max(data, function(d) { return d[year]; });
   color.domain([min, max]);
 }
 
-function setFill(data) {
+function setFill(data, color) {
   let score = data.properties.value;
   if (score) {
     // console.log(`Found score of ${score} for ${d.properties.name}`)
@@ -98,7 +89,16 @@ function getZoom(svg) {
   return d3.zoom().scaleExtent([0.05, 2.0]).on("zoom", zooming);
 }
 
-export function CreateGPIMap(container, year, withTooltip, withZoom) {
+export function CreateGPIMap(container, year, scale, withTooltip, withZoom) {
+  const color = d3.scaleQuantize()
+    .range([
+      "rgb(14,63,153)",
+      "rgb(73,93,154)",
+      "rgb(155,163,193)",
+      "rgb(206,136,125)",
+      "rgb(196,58,31)"]
+    );
+
   let svg = d3.select(container);
   const width = parseInt(svg.style("width").replace("px", ""));
   const height = parseInt(svg.style("height").replace("px", ""));
@@ -112,11 +112,11 @@ export function CreateGPIMap(container, year, withTooltip, withZoom) {
   svg
     .call(zoom.transform, d3.zoomIdentity
       .translate(width/2, height/1.5)
-      .scale(0.06));
+      .scale(scale));
 
   console.log(`Generating map for year ${year}`);
   d3.csv("data/overall.csv").then(function(data) {
-    setColorDomain(data, year)
+    setColorDomain(color, data, year)
 
     d3.json("data/world.geo.json").then(function(geojson) {
       attachScore(data, year, geojson);
@@ -125,7 +125,7 @@ export function CreateGPIMap(container, year, withTooltip, withZoom) {
         .enter()
         .append("path")
         .attr("d", path)
-        .style("fill", setFill)
+        .style("fill", function(d) { return setFill(d, color); })
 
       if (withTooltip) {
         svg.selectAll("path")

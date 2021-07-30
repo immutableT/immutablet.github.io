@@ -22,8 +22,9 @@
     import {CreateGPITrendByRegionBarchart} from "./js/trend-by-region.js";
     import {UpdateGPITrendBarchart} from "./js/trend-by-region.js";
 
-    CreateGPIMap('#map', '2021', true, true);
-    CreateLegend('#map-legend', true, true);
+    let scale = 0.06;
+    CreateGPIMap('#map', '2021', scale, true, true);
+    CreateLegend('#map-legend', scale, true, true);
     CreateZoomButtons('#map');
     CreateGPITrendByRegionBarchart(
       '2021',
