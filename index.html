@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>The world is getting more peaceful</title>
+  <title>According to the Global Peace Index, the world is getting more peaceful</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -21,22 +21,58 @@
   import {CreateGPIMap} from "./js/world-map.js";
   import {CreateLegend} from "./js/color-legend.js";
 
-  let scale = 0.05;
+  let scale = 0.035;
   CreateGPIMap('#map-2012', '2012', scale, false, false);
   CreateGPIMap('#map-2021', '2021', scale, false, false);
 
 </script>
 
-<h1 style="margin-left: 50px">The world is getting more peaceful</h1>
-<b style="margin-left: 50px; font-size: large">Source: Global Peace Index</b>
-
-<div class="global-peace-index-maps-side-by-side">
-  <svg id="map-2012" style="width: 600px; height:420px; margin-right: 30px"></svg>
-  <svg id="map-2021" style="width: 600px; height:420px; margin-left: 30px"></svg>
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="text-center">The world is getting more peaceful</h1>
+  </div>
 </div>
 
-<div style="margin-left: 1200px">
-  <button type="button" class="btn btn-primary" onclick="window.location.href='/gpi-wpi.html'">Let's see why</button>
+<div class="container">
+  <div class="row">
+    <div class="col-sm" >
+      <svg id="map-2012" class="p-2" style="width: 600px; height:420px"></svg>
+    </div>
+    <div class="col-sm">
+      <svg id="map-2021" class="p-2" style="width: 600px; height:420px"></svg>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm text-center">
+      <h1>2012</h1>
+    </div>
+    <div class="col-sm text-center">
+      <h1>2021</h1>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-auto">
+      <div class="rounded-circle legend-item" style="background-color: #CCCCCCFF"></div>
+      <div class="rounded-circle legend-item" style="background-color: #0E3F99FF"></div>
+      <div class="rounded-circle legend-item" style="background-color: #495D9AFF"></div>
+      <div class="rounded-circle legend-item" style="background-color: #9BA3C1FF"></div>
+      <div class="rounded-circle legend-item" style="background-color: #CE887DFF"></div>
+      <div class="rounded-circle legend-item" style="background-color: #C43A1FFF"></div>
+    </div>
+    <div class="col-auto">
+      <p class="legend-item-text">No data</p>
+      <p class="legend-item-text">&#8593; 1.5 More Peaceful</p>
+      <p class="legend-item-text">2.0</p>
+      <p class="legend-item-text">2.5</p>
+      <p class="legend-item-text">3.0</p>
+      <p class="legend-item-text">&#8595; 3.5 Less Peaceful</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-8 offset-sm-10">
+      <button type="button" class="btn btn-primary" onclick="window.location.href='/gpi-wpi.html'">Let's see why</button>
+    </div>
+  </div>
 </div>
 
 </body>

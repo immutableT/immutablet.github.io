@@ -1,6 +1,6 @@
 export function CreateLegend(containerID, showDataNotAvail) {
   let colorLegend = [
-    {color: "rgb(204, 204, 204)", text: "Data not available" },
+    {color: "495D9AFF", text: "Data not available" },
     {color: "rgb(14,63,153)", text: `1.5 "&#8593;" More Peaceful"`},
     {color: "rgb(73,93,154)", text:"2.0"},
     {color: "rgb(155,163,193)", text:"2.5"},
@@ -16,7 +16,7 @@ export function CreateLegend(containerID, showDataNotAvail) {
   let r = 6;
   let fontSize = "17px"
 
-  let y = 130;
+  let y = 130;CE887DFFCE887DFF
   for (let i = 0; i < colorLegend.length; i++) {
     svg.append("circle")
       .attr("cx", x)
