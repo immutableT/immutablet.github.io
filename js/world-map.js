@@ -65,7 +65,7 @@ function attachTooltip(d) {
 
   let year = eval(d3.select("#year").property('value'));
   let previousYear = (parseInt(year) - 1).toString();
-  console.log(`Getting delta for country: ${country}, year: ${year} previousYear: ${previousYear}`);
+  // console.log(`Getting delta for country: ${country}, year: ${year} previousYear: ${previousYear}`);
 
   d3.csv('./data/overall.csv').then(function (data) {
     data = data.filter(function (row) {
@@ -98,14 +98,18 @@ function getZoom(svg) {
   return d3.zoom().scaleExtent([0.05, 2.0]).on("zoom", zooming);
 }
 
-export function CreateGPIMap(container, year) {
+export function CreateGPIMap(container, year, withTooltip, withZoom) {
   let svg = d3.select(container);
   const width = parseInt(svg.style("width").replace("px", ""));
   const height = parseInt(svg.style("height").replace("px", ""));
+  console.log(`Width: ${width}, Height: ${height}`)
+
   let zoom = getZoom(svg);
+  if (withZoom) {
+    svg.call(zoom);
+  }
 
   svg
-    .call(zoom)
     .call(zoom.transform, d3.zoomIdentity
       .translate(width/2, height/1.5)
       .scale(0.06));
@@ -122,12 +126,16 @@ export function CreateGPIMap(container, year) {
         .append("path")
         .attr("d", path)
         .style("fill", setFill)
-        .on("mouseover", attachTooltip)
-        .on("mouseout", function() {
-          tooltip.transition()
-            .duration(200)
-            .style("opacity", 0);
-        })
+
+      if (withTooltip) {
+        svg.selectAll("path")
+          .on("mouseover", attachTooltip)
+          .on("mouseout", function() {
+            tooltip.transition()
+              .duration(200)
+              .style("opacity", 0);
+          })
+      }
     });
   });
 }

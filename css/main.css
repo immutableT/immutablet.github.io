@@ -3,6 +3,12 @@
   width: 70%;
 }
 
+.global-peace-index-maps-side-by-side {
+  display: flex;
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
 #map {
   flex-grow: 1;
   height:420px;
