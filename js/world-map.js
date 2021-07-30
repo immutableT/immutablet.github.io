@@ -1,3 +1,11 @@
+const colorScheme= [
+  "rgb(14,63,153)",
+  "rgb(73,93,154)",
+  "rgb(155,163,193)",
+  "rgb(206,136,125)",
+  "rgb(196,58,31)"
+]
+
 let projection = d3.geoMercator();
 let path = d3.geoPath().projection(projection);
 let tooltip = d3.select('#tooltip-map');
@@ -90,14 +98,7 @@ function getZoom(svg) {
 }
 
 export function CreateGPIMap(container, year, scale, withTooltip, withZoom) {
-  const color = d3.scaleQuantize()
-    .range([
-      "rgb(14,63,153)",
-      "rgb(73,93,154)",
-      "rgb(155,163,193)",
-      "rgb(206,136,125)",
-      "rgb(196,58,31)"]
-    );
+  const color = d3.scaleQuantize().range(colorScheme);
 
   let svg = d3.select(container);
   const width = parseInt(svg.style("width").replace("px", ""));
@@ -142,16 +143,17 @@ export function CreateGPIMap(container, year, scale, withTooltip, withZoom) {
 
 export function UpdateGPIMap(container, year) {
   let svg = d3.select(container);
+  const color = d3.scaleQuantize().range(colorScheme);
   console.log(`Generating update for year ${year}`);
   d3.csv("data/overall.csv").then(function(data) {
-    setColorDomain(data, year)
+    setColorDomain(color, data, year)
 
     d3.json("data/world.geo.json").then(function(geojson) {
       attachScore(data, year, geojson);
       svg.selectAll("path")
         .data(geojson.features)
         .transition()
-        .style("fill", setFill)
+        .style("fill",  function(d) { return setFill(d, color); })
     });
   });
 }
