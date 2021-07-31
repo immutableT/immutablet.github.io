@@ -13,33 +13,46 @@
 </head>
 
 <body>
-
   <script type="module">
     import {CreateGPI2WBIScatterPlot} from "./js/gpi-wbi.js";
-
     CreateGPI2WBIScatterPlot('2019');
   </script>
 
-  <h1 style="margin-left: 30%">Peace is good for the economy</h1>
-  <div style="display: flex; margin-left: 12%">
-    <p style="margin-top: 250px; font-weight: bold" >GDP Per Capita in USD</p>
-    <svg id="scatter-plot"></svg>
+  <div class="jumbotron p-3">
+    <div class="container">
+      <h1 class="text-center">Peace is good for the economy</h1>
+    </div>
   </div>
 
-  <div style="margin-left: 30%">
-    <span class="more-peaceful">&larr;&#160;more peaceful&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span>
-    <span class="less-peaceful">less peaceful&#160;&rarr;</span>
+  <div class="container">
+    <div class="row">
+      <div class="col-auto">
+        <p style="margin-top: 250px; font-weight: bold" >GDP Per Capita in USD</p>
+      </div>
+      <div class="col-auto">
+        <svg id="scatter-plot"></svg>
+        <div class="row">
+          <div class="col">
+            <h3 class="more-peaceful" style="margin-left: 150px">&larr;&#160;more peaceful</h3>
+          </div>
+          <div class="col">
+            <h3 class="less-peaceful" style="margin-left: 150px">less peaceful&#160;&rarr;</h3>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <h5>Sources:<br>Global Peace Index 2019<br>World Bank 2019</h5>
+      </div>
+      <div class="row">
+        <div class="col offset-md-8">
+          <button type="button" class="btn btn-primary" onclick="window.location.href='/explore.html'">Explore the trend overtime</button>
+        </div>
+      </div>
+    </div>
   </div>
-  <div style="margin-left: 22%; font-size: large; font-weight: bold">
-    <p>Sources:<br>Global Peace Index 2019<br>World Bank 2019</p>
-  </div>
+
 
   <div id="tooltip-scatter-plot" class="tooltip-scatter-plot"></div>
-
-  <div style="margin-left: 1250px; margin-top: 50px">
-    <button type="button" class="btn btn-primary" onclick="window.location.href='/explore.html'">Explore the trend overtime</button>
-  </div>
-
 </body>
 
 </html>
