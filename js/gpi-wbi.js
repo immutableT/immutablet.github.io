@@ -51,6 +51,7 @@ export function CreateGPI2WBIScatterPlot(year) {
       .attr("width", w + margin.left + margin.right)
       .attr("height", h + margin.top + margin.bottom)
       .append("g")
+      .attr("id", "scatter-plot-container")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     svg.selectAll("circle")
@@ -58,6 +59,7 @@ export function CreateGPI2WBIScatterPlot(year) {
       .enter()
       .filter(function(d) { return !isNaN(getY(d))})
       .append("circle")
+      .attr("id", function(d) { return d.Country; })
       .attr("cx", function (d) {
         return xScale(getX(d));
       })
@@ -84,6 +86,8 @@ export function CreateGPI2WBIScatterPlot(year) {
       .attr("class", "axis-y")
       .call(yAxis);
 
+    attachAnnotations();
+
   });
 }
 
@@ -103,6 +107,57 @@ function attachTooltip(d) {
   tooltip.html(tip)
     .style('left', d.clientX + 'px')
     .style('top', d.clientY + 'px')
+
+  console.log(`Left: ${tooltip.style("left")}  Top: ${tooltip.style("top")}`)
 }
+
+function attachAnnotations() {
+  let peacefulAndProsperousMark = d3.select("#Norway");
+  let xPeacefulAndProsperous = peacefulAndProsperousMark.attr("cx");
+  let yPeacefulAndProsperous = peacefulAndProsperousMark.attr("cy");
+
+  let notPeacefulAndNotProsperous = d3.select("#Russia");
+  let xNotPeacefulAndNotProsperous = notPeacefulAndNotProsperous.attr("cx");
+  let yNotPeacefulAndNotProsperous = notPeacefulAndNotProsperous.attr("cy");
+
+  const annotations = [
+    {
+      note: {
+        //label: "GDP: $92,556 GPI: 1.47",
+        title: "Norway"
+      },
+      color: ["#0E3F99FF"],
+      dx: xPeacefulAndProsperous - 100,
+      dy: yPeacefulAndProsperous,
+
+      x: xPeacefulAndProsperous,
+      y: yPeacefulAndProsperous
+    },
+    {
+      note: {
+        //label: "GDP: $573 GPI: 3.57",
+        title: "Russia",
+      },
+      color: ["#C43A1FFF"],
+      // End of the connector
+      dx: xNotPeacefulAndNotProsperous - 650,
+      dy: yNotPeacefulAndNotProsperous - 450,
+      // Center of the circle
+      x: xNotPeacefulAndNotProsperous,
+      y: yNotPeacefulAndNotProsperous
+    },
+  ]
+
+  const makeAnnotations = d3.annotation()
+    .type(d3.annotationCalloutCircle)
+    .annotations(annotations)
+
+  d3.select("#scatter-plot-container")
+    .append("g")
+    .attr("class", "annotation-group")
+    .call(makeAnnotations)
+}
+
+
 
 
