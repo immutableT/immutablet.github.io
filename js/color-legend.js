@@ -5,7 +5,7 @@ export function CreateLegend(containerID, showDataNotAvail) {
     {color: "rgb(73,93,154)", text:"2.0"},
     {color: "rgb(155,163,193)", text:"2.5"},
     {color: "rgb(206,136,125)", text: "3.0"},
-    {color: "rgb(196,58,31)", text:`3.5" &#8595 Less Peaceful`}
+    {color: "rgb(196,58,31)", text:`3.5 &#8595 Less Peaceful`}
   ]
   if (!showDataNotAvail) {
     colorLegend.shift();
